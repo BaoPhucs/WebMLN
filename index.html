@@ -1,0 +1,3188 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Phân Chia Giá Trị Thặng Dư & Tiền Đẻ Ra Tiền | MLN122</title>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <style>
+    :root {
+      --bg: #FFFFFF;
+      --bg2: #F0F5FF;
+      --bg3: #FFFFFF;
+      --bg4: #EEF2FF;
+      --red: #DC2626;
+      --red2: #EF4444;
+      --gold: #D97706;
+      --gold2: #F59E0B;
+      --teal: #0891B2;
+      --teal2: #06B6D4;
+      --blue: #4361EE;
+      --purple: #7C3AED;
+      --orange: #EA580C;
+      --green: #059669;
+      --border: rgba(0, 0, 0, 0.09);
+      --text: #1E2A45;
+      --muted: #64748B;
+      --shadow: 0 2px 16px rgba(67, 97, 238, 0.10);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box
+    }
+
+    html {
+      scroll-behavior: smooth
+    }
+
+    body {
+      font-family: 'Be Vietnam Pro', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      overflow-x: hidden
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none
+    }
+
+    ::-webkit-scrollbar {
+      width: 5px
+    }
+
+    ::-webkit-scrollbar-track {
+      background: #F0F5FF
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--red);
+      border-radius: 3px
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+      box-shadow: 0 1px 12px rgba(0, 0, 0, 0.06)
+    }
+
+    .nav-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+      height: 58px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between
+    }
+
+    .nav-logo {
+      font-size: 17px;
+      font-weight: 900;
+      background: linear-gradient(90deg, var(--red), var(--gold2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2px
+    }
+
+    .nav-links a {
+      padding: 6px 12px;
+      font-size: 12.5px;
+      font-weight: 600;
+      color: var(--muted);
+      border-radius: 6px;
+      transition: all .2s
+    }
+
+    .nav-links a:hover {
+      color: var(--blue);
+      background: rgba(67, 97, 238, 0.07)
+    }
+
+    .nav-links a.active {
+      color: var(--blue);
+      background: rgba(67, 97, 238, 0.10)
+    }
+
+    .nav-ham {
+      display: none;
+      background: none;
+      border: none;
+      color: var(--text);
+      font-size: 20px;
+      cursor: pointer
+    }
+
+    /* HERO */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(135deg, #EF4444 0%, #B91C1C 25%, #7C3AED 65%, #4361EE 100%)
+    }
+
+    .hero-float {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden
+    }
+
+    .hf-coin {
+      position: absolute;
+      font-size: 28px;
+      animation: coinFloat linear infinite;
+      opacity: 0
+    }
+
+    @keyframes coinFloat {
+      0% {
+        transform: translateY(110vh) rotate(0deg);
+        opacity: 0
+      }
+
+      10% {
+        opacity: .6
+      }
+
+      90% {
+        opacity: .3
+      }
+
+      100% {
+        transform: translateY(-10vh) rotate(540deg);
+        opacity: 0
+      }
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 860px;
+      padding: 20px
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255, 255, 255, 0.18);
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      border-radius: 100px;
+      padding: 7px 18px;
+      font-size: 12px;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      margin-bottom: 24px;
+      backdrop-filter: blur(8px)
+    }
+
+    .hero-title {
+      font-size: clamp(38px, 7.5vw, 84px);
+      font-weight: 900;
+      line-height: 1.03;
+      letter-spacing: -2.5px;
+      margin-bottom: 16px
+    }
+
+    .hero-title .l1 {
+      display: block;
+      color: #fff;
+      text-shadow: 0 2px 20px rgba(0, 0, 0, 0.2)
+    }
+
+    .hero-title .l2 {
+      display: block;
+      background: linear-gradient(135deg, #FFE566, #FFBF00);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text
+    }
+
+    .hero-desc {
+      font-size: 17px;
+      color: rgba(255, 255, 255, 0.88);
+      max-width: 580px;
+      margin: 0 auto 40px;
+      line-height: 1.75
+    }
+
+    .hero-kpis {
+      display: flex;
+      gap: 0;
+      justify-content: center;
+      margin-bottom: 48px;
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      border-radius: 20px;
+      overflow: hidden;
+      background: rgba(255, 255, 255, 0.12);
+      backdrop-filter: blur(12px)
+    }
+
+    .kpi {
+      flex: 1;
+      padding: 20px 16px;
+      text-align: center;
+      border-right: 1px solid rgba(255, 255, 255, 0.2)
+    }
+
+    .kpi:last-child {
+      border-right: none
+    }
+
+    .kpi .val {
+      font-size: 30px;
+      font-weight: 900;
+      line-height: 1;
+      color: #fff
+    }
+
+    .kpi .lbl {
+      font-size: 11px;
+      color: rgba(255, 255, 255, 0.75);
+      margin-top: 5px;
+      line-height: 1.4
+    }
+
+    .kpi .src {
+      font-size: 10px;
+      color: rgba(255, 255, 255, 0.55);
+      margin-top: 3px
+    }
+
+    .kpi .src a {
+      color: inherit
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 30px;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 14px;
+      border: none;
+      cursor: pointer;
+      transition: all .25s;
+      font-family: inherit
+    }
+
+    .btn-red {
+      background: linear-gradient(135deg, #DC2626, #991B1B);
+      color: #fff
+    }
+
+    .btn-red:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 36px rgba(220, 38, 38, .45)
+    }
+
+    .btn-gold {
+      background: linear-gradient(135deg, #F59E0B, #D97706);
+      color: #fff
+    }
+
+    .btn-gold:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 36px rgba(245, 158, 11, .45)
+    }
+
+    .btn-outline {
+      background: rgba(255, 255, 255, 0.15);
+      color: #fff;
+      border: 1.5px solid rgba(255, 255, 255, 0.4);
+      backdrop-filter: blur(8px)
+    }
+
+    .btn-outline:hover {
+      background: rgba(255, 255, 255, 0.25)
+    }
+
+    .btn-outline-dark {
+      background: #fff;
+      color: var(--text);
+      border: 1.5px solid var(--border)
+    }
+
+    .btn-outline-dark:hover {
+      border-color: var(--blue);
+      color: var(--blue)
+    }
+
+    .scroll-arrow {
+      position: absolute;
+      bottom: 32px;
+      left: 50%;
+      transform: translateX(-50%);
+      animation: bobble 2s ease-in-out infinite;
+      color: #fff;
+      font-size: 22px;
+      opacity: 0.8
+    }
+
+    @keyframes bobble {
+
+      0%,
+      100% {
+        transform: translateX(-50%) translateY(0)
+      }
+
+      50% {
+        transform: translateX(-50%) translateY(8px)
+      }
+    }
+
+    /* SECTIONS */
+    section {
+      padding: 80px 24px
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto
+    }
+
+    .sec-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 5px 15px;
+      border-radius: 100px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      margin-bottom: 14px
+    }
+
+    .badge-red {
+      background: rgba(220, 38, 38, 0.10);
+      border: 1px solid rgba(220, 38, 38, 0.25);
+      color: var(--red)
+    }
+
+    .badge-gold {
+      background: rgba(245, 158, 11, 0.10);
+      border: 1px solid rgba(217, 119, 6, 0.25);
+      color: var(--gold)
+    }
+
+    .badge-teal {
+      background: rgba(8, 145, 178, 0.10);
+      border: 1px solid rgba(8, 145, 178, 0.25);
+      color: var(--teal)
+    }
+
+    .badge-blue {
+      background: rgba(67, 97, 238, 0.10);
+      border: 1px solid rgba(67, 97, 238, 0.25);
+      color: var(--blue)
+    }
+
+    .badge-purple {
+      background: rgba(124, 58, 237, 0.10);
+      border: 1px solid rgba(124, 58, 237, 0.25);
+      color: var(--purple)
+    }
+
+    .sec-title {
+      font-size: clamp(28px, 5vw, 50px);
+      font-weight: 900;
+      letter-spacing: -1.5px;
+      line-height: 1.1;
+      margin-bottom: 10px;
+      color: var(--text)
+    }
+
+    .sec-sub {
+      font-size: 15.5px;
+      color: var(--muted);
+      max-width: 600px;
+      line-height: 1.7;
+      margin-bottom: 40px
+    }
+
+    .sec-light {
+      background: #F0F5FF
+    }
+
+    .sec-warm {
+      background: #FFF9F0
+    }
+
+    .sec-mint {
+      background: #F0FDF9
+    }
+
+    /* GRID */
+    .g2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      align-items: start
+    }
+
+    .g3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px
+    }
+
+    .g4 {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px
+    }
+
+    /* CARDS */
+    .card {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 26px;
+      box-shadow: var(--shadow)
+    }
+
+    .card-sm {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 18px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05)
+    }
+
+    .card-glow-red {
+      border-color: rgba(220, 38, 38, 0.2);
+      box-shadow: 0 4px 24px rgba(220, 38, 38, 0.08)
+    }
+
+    .card-glow-gold {
+      border-color: rgba(245, 158, 11, 0.2);
+      box-shadow: 0 4px 24px rgba(245, 158, 11, 0.08)
+    }
+
+    .card-glow-teal {
+      border-color: rgba(8, 145, 178, 0.2);
+      box-shadow: 0 4px 24px rgba(8, 145, 178, 0.08)
+    }
+
+    /* ICON BOX */
+    .ibox {
+      width: 52px;
+      height: 52px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      margin-bottom: 16px;
+      flex-shrink: 0
+    }
+
+    .ibox-red {
+      background: rgba(220, 38, 38, 0.10);
+      color: var(--red)
+    }
+
+    .ibox-gold {
+      background: rgba(245, 158, 11, 0.12);
+      color: var(--gold)
+    }
+
+    .ibox-teal {
+      background: rgba(8, 145, 178, 0.10);
+      color: var(--teal)
+    }
+
+    .ibox-blue {
+      background: rgba(67, 97, 238, 0.10);
+      color: var(--blue)
+    }
+
+    .ibox-purple {
+      background: rgba(124, 58, 237, 0.10);
+      color: var(--purple)
+    }
+
+    .ibox-green {
+      background: rgba(5, 150, 105, 0.10);
+      color: var(--green)
+    }
+
+    /* PROGRESS BAR */
+    .pbar-wrap {
+      margin-bottom: 14px
+    }
+
+    .pbar-top {
+      display: flex;
+      justify-content: space-between;
+      font-size: 13px;
+      margin-bottom: 6px
+    }
+
+    .pbar-top .k {
+      color: var(--muted)
+    }
+
+    .pbar-top .v {
+      font-weight: 700;
+      color: var(--text)
+    }
+
+    .pbar-track {
+      background: rgba(0, 0, 0, 0.07);
+      border-radius: 100px;
+      height: 10px;
+      overflow: hidden
+    }
+
+    .pbar-fill {
+      height: 100%;
+      border-radius: 100px;
+      transition: width 1.2s ease;
+      width: 0%
+    }
+
+    .pbar-red {
+      background: linear-gradient(90deg, var(--red), var(--red2))
+    }
+
+    .pbar-gold {
+      background: linear-gradient(90deg, var(--gold), var(--gold2))
+    }
+
+    .pbar-teal {
+      background: linear-gradient(90deg, var(--teal), var(--teal2))
+    }
+
+    .pbar-blue {
+      background: linear-gradient(90deg, var(--blue), #6E8EFF)
+    }
+
+    .pbar-green {
+      background: linear-gradient(90deg, var(--green), #34D399)
+    }
+
+    /* QUOTE */
+    .qbox {
+      background: linear-gradient(135deg, #FFFBEB, #FFF7ED);
+      border: 1px solid rgba(217, 119, 6, 0.2);
+      border-left: 3px solid var(--gold);
+      border-radius: 14px;
+      padding: 22px 24px;
+      margin: 20px 0
+    }
+
+    .qbox p {
+      font-size: 14.5px;
+      font-style: italic;
+      line-height: 1.75;
+      color: var(--text)
+    }
+
+    .qbox .cite {
+      font-size: 11.5px;
+      color: var(--muted);
+      margin-top: 10px;
+      font-style: normal
+    }
+
+    /* SOURCE */
+    .src-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 11px;
+      color: var(--muted);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 4px 10px;
+      margin: 4px 4px 0 0;
+      transition: all .2s;
+      background: #fff
+    }
+
+    .src-chip:hover {
+      color: var(--teal);
+      border-color: var(--teal)
+    }
+
+    /* THEORY FLOW */
+    .theory-flow {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+      flex-wrap: nowrap;
+      margin: 32px 0;
+      overflow-x: auto;
+      padding-bottom: 8px
+    }
+
+    .tf-box {
+      background: #fff;
+      border: 1.5px solid var(--border);
+      border-radius: 16px;
+      padding: 18px 22px;
+      text-align: center;
+      min-width: 130px;
+      flex-shrink: 0;
+      box-shadow: var(--shadow)
+    }
+
+    .tf-icon {
+      font-size: 28px;
+      margin-bottom: 8px
+    }
+
+    .tf-label {
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 1.3;
+      color: var(--text)
+    }
+
+    .tf-sub {
+      font-size: 11px;
+      color: var(--muted);
+      margin-top: 4px
+    }
+
+    .tf-arrow {
+      font-size: 22px;
+      color: var(--gold);
+      margin: 0 8px;
+      flex-shrink: 0
+    }
+
+    .tf-split {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      flex-shrink: 0
+    }
+
+    .tf-split-item {
+      background: #fff;
+      border: 1.5px solid var(--border);
+      border-radius: 12px;
+      padding: 10px 16px;
+      text-align: center;
+      font-size: 12px;
+      font-weight: 700;
+      min-width: 145px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06)
+    }
+
+    /* PRICE MARKUP */
+    .markup-card {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 24px;
+      text-align: center;
+      box-shadow: var(--shadow)
+    }
+
+    .markup-product {
+      font-size: 52px;
+      margin-bottom: 6px
+    }
+
+    .markup-name {
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 20px
+    }
+
+    .price-bar-visual {
+      height: 52px;
+      border-radius: 10px;
+      overflow: hidden;
+      margin-bottom: 12px;
+      display: flex
+    }
+
+    .price-cost {
+      background: linear-gradient(90deg, #E2E8F0, #CBD5E1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 700;
+      color: #475569;
+      flex: 7.5
+    }
+
+    .price-margin {
+      background: linear-gradient(90deg, var(--red), var(--red2));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 700;
+      color: #fff;
+      flex: 2.5
+    }
+
+    .price-labels {
+      display: flex;
+      justify-content: space-between;
+      font-size: 13px;
+      margin-bottom: 16px
+    }
+
+    .markup-insight {
+      font-size: 12.5px;
+      color: var(--muted);
+      line-height: 1.6;
+      background: #FEF2F2;
+      border-radius: 10px;
+      padding: 12px 14px;
+      text-align: left;
+      border: 1px solid rgba(220, 38, 38, 0.12)
+    }
+
+    /* FLOW */
+    .flow-row {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin: 24px 0
+    }
+
+    .flow-node {
+      background: #fff;
+      border: 2px solid var(--border);
+      border-radius: 14px;
+      padding: 14px 20px;
+      text-align: center;
+      min-width: 110px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06)
+    }
+
+    .flow-node .sym {
+      font-size: 26px;
+      font-weight: 900
+    }
+
+    .flow-node .desc {
+      font-size: 11px;
+      color: var(--muted);
+      margin-top: 4px;
+      line-height: 1.4
+    }
+
+    .flow-arr {
+      font-size: 20px;
+      color: var(--gold);
+      margin: 0 10px;
+      font-weight: 900
+    }
+
+    /* VS */
+    .vs-grid {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      gap: 16px;
+      align-items: center
+    }
+
+    .vs-label {
+      background: linear-gradient(135deg, var(--red), var(--gold2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      font-size: 28px;
+      font-weight: 900;
+      text-align: center
+    }
+
+    .comp-card {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 22px;
+      box-shadow: var(--shadow)
+    }
+
+    .comp-card.highlight {
+      border-color: rgba(245, 158, 11, 0.35);
+      background: linear-gradient(135deg, #FFFBEB, #fff);
+      box-shadow: 0 4px 24px rgba(245, 158, 11, 0.10)
+    }
+
+    .comp-card h4 {
+      font-size: 16px;
+      font-weight: 800;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--text)
+    }
+
+    .comp-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 0;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+      font-size: 13px
+    }
+
+    .comp-row:last-child {
+      border: none
+    }
+
+    .comp-row .k {
+      color: var(--muted)
+    }
+
+    .comp-row .v {
+      font-weight: 700;
+      color: var(--text)
+    }
+
+    /* TIMELINE */
+    .tl {
+      padding-left: 28px;
+      position: relative
+    }
+
+    .tl::before {
+      content: '';
+      position: absolute;
+      left: 9px;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: linear-gradient(to bottom, var(--green), var(--gold2), var(--red))
+    }
+
+    .tl-item {
+      position: relative;
+      margin-bottom: 24px
+    }
+
+    .tl-dot {
+      position: absolute;
+      left: -23px;
+      top: 5px;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      border: 2px solid #fff;
+      box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1)
+    }
+
+    .tl-year {
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 4px
+    }
+
+    .tl-text {
+      font-size: 13.5px;
+      color: var(--muted);
+      line-height: 1.65
+    }
+
+    .tl-text strong {
+      color: var(--text)
+    }
+
+    /* CHART */
+    .chart-card {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 24px;
+      box-shadow: var(--shadow)
+    }
+
+    .chart-card h3 {
+      font-size: 15px;
+      font-weight: 800;
+      margin-bottom: 3px;
+      color: var(--text)
+    }
+
+    .chart-card .ch-sub {
+      font-size: 11.5px;
+      color: var(--muted);
+      margin-bottom: 20px
+    }
+
+    .ch-wrap {
+      position: relative;
+      height: 270px
+    }
+
+    /* SPEC */
+    .spec-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+      margin: 24px 0
+    }
+
+    .spec-card {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 22px;
+      border-top: 3px solid transparent;
+      box-shadow: var(--shadow)
+    }
+
+    .spec-card.red {
+      border-top-color: var(--red)
+    }
+
+    .spec-card.amber {
+      border-top-color: var(--gold2)
+    }
+
+    .spec-card.green {
+      border-top-color: var(--green)
+    }
+
+    .spec-card h4 {
+      font-size: 14px;
+      font-weight: 800;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--text)
+    }
+
+    .spec-card p {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.65
+    }
+
+    /* AFFORDABILITY */
+    .afford-visual {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 12px;
+      margin: 24px 0
+    }
+
+    .afford-year {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 14px 10px;
+      text-align: center;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05)
+    }
+
+    .afford-year .yr {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--muted);
+      margin-bottom: 8px
+    }
+
+    .afford-year .yrs {
+      font-size: 22px;
+      font-weight: 900;
+      line-height: 1;
+      margin-bottom: 6px
+    }
+
+    .afford-year .abar {
+      height: 6px;
+      border-radius: 3px;
+      margin-bottom: 8px
+    }
+
+    .afford-year .tag {
+      font-size: 10px;
+      padding: 2px 8px;
+      border-radius: 100px;
+      font-weight: 700
+    }
+
+    .tag-ok {
+      background: rgba(5, 150, 105, 0.12);
+      color: var(--green)
+    }
+
+    .tag-warn {
+      background: rgba(245, 158, 11, 0.12);
+      color: var(--gold)
+    }
+
+    .tag-danger {
+      background: rgba(220, 38, 38, 0.12);
+      color: var(--red)
+    }
+
+    /* QUIZ */
+    #quiz {
+      background: #F0F5FF
+    }
+
+    .quiz-wrap {
+      max-width: 700px;
+      margin: 0 auto
+    }
+
+    .q-prog {
+      background: rgba(0, 0, 0, 0.08);
+      border-radius: 100px;
+      height: 6px;
+      margin-bottom: 28px;
+      overflow: hidden
+    }
+
+    .q-prog-bar {
+      height: 100%;
+      background: linear-gradient(90deg, var(--red), var(--gold2));
+      border-radius: 100px;
+      transition: width .5s
+    }
+
+    .q-num {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--muted);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 12px
+    }
+
+    .q-text {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 22px;
+      line-height: 1.5;
+      color: var(--text)
+    }
+
+    .q-opts {
+      display: grid;
+      gap: 10px
+    }
+
+    .q-opt {
+      background: #fff;
+      border: 2px solid var(--border);
+      border-radius: 12px;
+      padding: 15px 20px;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all .2s;
+      text-align: left;
+      color: var(--text);
+      font-family: inherit;
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05)
+    }
+
+    .q-opt:hover {
+      border-color: var(--gold2);
+      background: #FFFBEB;
+      box-shadow: 0 4px 16px rgba(245, 158, 11, 0.12)
+    }
+
+    .q-opt.correct {
+      border-color: var(--green) !important;
+      background: rgba(5, 150, 105, 0.07) !important;
+      color: var(--green)
+    }
+
+    .q-opt.wrong {
+      border-color: var(--red) !important;
+      background: rgba(220, 38, 38, 0.07) !important;
+      color: var(--red)
+    }
+
+    .q-opt:disabled {
+      cursor: not-allowed
+    }
+
+    .opt-letter {
+      width: 28px;
+      height: 28px;
+      border-radius: 8px;
+      background: rgba(0, 0, 0, 0.06);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 800;
+      flex-shrink: 0;
+      margin-top: 1px;
+      color: var(--muted)
+    }
+
+    .q-explain {
+      background: #FFFBEB;
+      border: 1px solid rgba(217, 119, 6, 0.25);
+      border-radius: 10px;
+      padding: 14px 18px;
+      font-size: 13.5px;
+      color: var(--text);
+      margin-top: 14px;
+      line-height: 1.7;
+      display: none
+    }
+
+    .q-nav {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 22px
+    }
+
+    .q-score-screen {
+      text-align: center;
+      padding: 40px 0;
+      display: none
+    }
+
+    .q-score-screen .sc-n {
+      font-size: 80px;
+      font-weight: 900;
+      background: linear-gradient(135deg, var(--red), var(--gold2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1
+    }
+
+    .q-score-screen .sc-msg {
+      font-size: 20px;
+      font-weight: 700;
+      margin: 16px 0;
+      color: var(--text)
+    }
+
+    .q-score-screen .sc-sub {
+      font-size: 14px;
+      color: var(--muted);
+      margin-bottom: 28px
+    }
+
+    /* SURVEY */
+    #survey {
+      background: #FFF9F0;
+      border-top: 1px solid var(--border)
+    }
+
+    .survey-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px
+    }
+
+    .sv-q {
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 14px;
+      color: var(--text)
+    }
+
+    .sv-opts {
+      display: flex;
+      flex-direction: column;
+      gap: 9px
+    }
+
+    .sv-opt {
+      background: #fff;
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      padding: 12px 16px;
+      font-size: 13.5px;
+      cursor: pointer;
+      transition: all .2s;
+      text-align: left;
+      color: var(--text);
+      font-family: inherit;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04)
+    }
+
+    .sv-opt:hover,
+    .sv-opt.selected {
+      border-color: var(--gold2);
+      background: #FFFBEB;
+      color: var(--gold)
+    }
+
+    .sv-result {
+      margin-top: 18px
+    }
+
+    .sv-bar-row {
+      margin-bottom: 9px
+    }
+
+    .sv-bar-labels {
+      display: flex;
+      justify-content: space-between;
+      font-size: 11.5px;
+      color: var(--muted);
+      margin-bottom: 4px
+    }
+
+    .sv-bar-track {
+      background: rgba(0, 0, 0, 0.07);
+      border-radius: 100px;
+      height: 8px;
+      overflow: hidden
+    }
+
+    .sv-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--red), var(--gold2));
+      border-radius: 100px;
+      transition: width .8s;
+      width: 0%
+    }
+
+    /* REFS */
+    #refs {
+      background: #F0F5FF;
+      border-top: 1px solid var(--border)
+    }
+
+    .ref-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+      gap: 14px
+    }
+
+    .ref-card {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05)
+    }
+
+    .ref-n {
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--red);
+      margin-bottom: 5px;
+      letter-spacing: .5px
+    }
+
+    .ref-t {
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 6px;
+      line-height: 1.4;
+      color: var(--text)
+    }
+
+    .ref-card a {
+      font-size: 11.5px;
+      color: var(--teal);
+      display: inline-flex;
+      align-items: center;
+      gap: 4px
+    }
+
+    .ref-card a:hover {
+      text-decoration: underline
+    }
+
+    footer {
+      background: var(--text);
+      border-top: 1px solid var(--border);
+      padding: 28px 24px;
+      text-align: center
+    }
+
+    footer p {
+      font-size: 13px;
+      color: rgba(255, 255, 255, 0.6)
+    }
+
+    .hl {
+      color: var(--gold);
+      font-weight: 700
+    }
+
+    .hl-red {
+      color: var(--red);
+      font-weight: 700
+    }
+
+    .hl-teal {
+      color: var(--teal);
+      font-weight: 700
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 3px 10px;
+      border-radius: 100px;
+      font-size: 11.5px;
+      font-weight: 600
+    }
+
+    .pill-red {
+      background: rgba(220, 38, 38, 0.10);
+      color: var(--red)
+    }
+
+    .pill-green {
+      background: rgba(5, 150, 105, 0.10);
+      color: var(--green)
+    }
+
+    .pill-gold {
+      background: rgba(245, 158, 11, 0.12);
+      color: var(--gold)
+    }
+
+    .pill-teal {
+      background: rgba(8, 145, 178, 0.10);
+      color: var(--teal)
+    }
+
+    /* CALC */
+    .calc-box {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 26px;
+      box-shadow: var(--shadow)
+    }
+
+    .calc-row {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 14px;
+      flex-wrap: wrap
+    }
+
+    .calc-label {
+      font-size: 13px;
+      color: var(--muted);
+      min-width: 170px
+    }
+
+    .calc-input {
+      background: #F8FAFC;
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      padding: 10px 14px;
+      font-size: 14px;
+      color: var(--text);
+      font-family: inherit;
+      width: 170px;
+      outline: none;
+      transition: border .2s
+    }
+
+    .calc-input:focus {
+      border-color: var(--blue);
+      box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.10)
+    }
+
+    .calc-result {
+      background: linear-gradient(135deg, #FEF3C7, #FFF7ED);
+      border: 1px solid rgba(217, 119, 6, 0.2);
+      border-radius: 14px;
+      padding: 20px;
+      margin-top: 18px
+    }
+
+    .calc-result-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 7px 0;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+      font-size: 13.5px;
+      color: var(--text)
+    }
+
+    .calc-result-row:last-child {
+      border: none;
+      font-size: 16px;
+      font-weight: 800;
+      color: var(--gold)
+    }
+
+    /* RANGE SLIDER (shared) */
+    .range-row {
+      margin: 18px 0 10px
+    }
+
+    .range-row .range-top {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12.5px;
+      color: var(--muted);
+      margin-bottom: 8px
+    }
+
+    .range-row .range-top strong {
+      color: var(--text)
+    }
+
+    input[type=range].rng {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 100%;
+      height: 8px;
+      border-radius: 100px;
+      background: linear-gradient(90deg, var(--gold2), var(--red));
+      outline: none;
+      cursor: pointer
+    }
+
+    input[type=range].rng::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: #fff;
+      border: 3px solid var(--red);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+      cursor: pointer
+    }
+
+    input[type=range].rng::-moz-range-thumb {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: #fff;
+      border: 3px solid var(--red);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+      cursor: pointer;
+      border: 3px solid var(--red)
+    }
+
+    /* CLICK-TO-REVEAL THEORY FLOW */
+    .tf-box,
+    .tf-split-item {
+      cursor: pointer;
+      transition: transform .2s, box-shadow .2s
+    }
+
+    .tf-box:hover,
+    .tf-split-item:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12)
+    }
+
+    .tf-box.active,
+    .tf-split-item.active {
+      box-shadow: 0 0 0 3px var(--gold2), 0 8px 24px rgba(0, 0, 0, 0.12)
+    }
+
+    .tf-hint {
+      font-size: 9.5px;
+      color: var(--muted);
+      margin-top: 6px;
+      opacity: .7
+    }
+
+    .flow-detail {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height .4s ease, opacity .3s ease, margin .4s ease;
+      opacity: 0
+    }
+
+    .flow-detail.open {
+      max-height: 260px;
+      opacity: 1;
+      margin-top: 20px
+    }
+
+    .flow-detail-inner {
+      background: #fff;
+      border: 1.5px solid var(--gold2);
+      border-radius: 14px;
+      padding: 18px 22px;
+      box-shadow: var(--shadow)
+    }
+
+    .flow-detail-inner h4 {
+      font-size: 14.5px;
+      font-weight: 800;
+      margin-bottom: 8px;
+      color: var(--gold);
+      display: flex;
+      align-items: center;
+      gap: 8px
+    }
+
+    .flow-detail-inner p {
+      font-size: 13.5px;
+      color: var(--muted);
+      line-height: 1.7
+    }
+
+    /* BEFORE/AFTER COMPARE SLIDER */
+    .compare-wrap {
+      position: relative;
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+      height: 280px;
+      user-select: none
+    }
+
+    .compare-panel {
+      position: absolute;
+      inset: 0;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center
+    }
+
+    .compare-before {
+      background: linear-gradient(135deg, #ECFDF5, #F0FDF9)
+    }
+
+    .compare-after {
+      background: linear-gradient(135deg, #FEF2F2, #FFF7ED);
+      clip-path: inset(0 0 0 50%)
+    }
+
+    .compare-label {
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 8px
+    }
+
+    .compare-value {
+      font-size: 30px;
+      font-weight: 900;
+      line-height: 1.15;
+      margin-bottom: 8px
+    }
+
+    .compare-desc {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.6;
+      max-width: 260px
+    }
+
+    .compare-divider {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      width: 4px;
+      background: #fff;
+      box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1);
+      transform: translateX(-50%);
+      pointer-events: none;
+      display: flex;
+      align-items: center;
+      justify-content: center
+    }
+
+    .compare-handle {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: #fff;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text);
+      font-size: 13px
+    }
+
+    .compare-range {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      cursor: ew-resize;
+      margin: 0
+    }
+
+    /* TIMELINE SCROLL REVEAL */
+    .tl-item {
+      opacity: 0;
+      transform: translateX(-16px);
+      transition: opacity .6s ease, transform .6s ease
+    }
+
+    .tl-item.tl-visible {
+      opacity: 1;
+      transform: translateX(0)
+    }
+
+    .tl-item .tl-dot {
+      transition: box-shadow .4s ease, transform .4s ease
+    }
+
+    .tl-item.tl-visible .tl-dot {
+      transform: scale(1.25);
+      box-shadow: 0 0 0 5px rgba(220, 38, 38, 0.18)
+    }
+
+    .tl-bar-track {
+      background: rgba(0, 0, 0, 0.07);
+      border-radius: 100px;
+      height: 6px;
+      width: 100%;
+      max-width: 180px;
+      overflow: hidden;
+      margin-top: 8px
+    }
+
+    .tl-bar-fill {
+      height: 100%;
+      border-radius: 100px;
+      width: 0%;
+      transition: width 1s ease .15s
+    }
+
+    /* PROGRESS TRACKER WIDGET */
+    #exploreTracker {
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      z-index: 900;
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      box-shadow: 0 6px 24px rgba(0, 0, 0, 0.15);
+      padding: 10px 16px 10px 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      transition: all .25s
+    }
+
+    #exploreTracker:hover {
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2)
+    }
+
+    .et-ring {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      flex-shrink: 0
+    }
+
+    .et-text {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text);
+      white-space: nowrap
+    }
+
+    .et-text small {
+      display: block;
+      font-size: 9.5px;
+      color: var(--muted);
+      font-weight: 600
+    }
+
+    .et-panel {
+      position: absolute;
+      bottom: 56px;
+      right: 0;
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      box-shadow: 0 10px 36px rgba(0, 0, 0, 0.18);
+      padding: 14px;
+      width: 210px;
+      display: none
+    }
+
+    #exploreTracker.open .et-panel {
+      display: block
+    }
+
+    .et-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12.5px;
+      color: var(--muted);
+      padding: 6px 4px
+    }
+
+    .et-item.done {
+      color: var(--text);
+      font-weight: 700
+    }
+
+    .et-item i {
+      width: 16px;
+      color: var(--border)
+    }
+
+    .et-item.done i {
+      color: var(--green)
+    }
+
+    /* ACHIEVEMENT BADGE */
+    .badge-box {
+      display: none;
+      background: linear-gradient(135deg, #FFFBEB, #FFF7ED);
+      border: 1.5px solid var(--gold2);
+      border-radius: 16px;
+      padding: 22px 26px;
+      text-align: center;
+      margin-top: 28px;
+      box-shadow: 0 8px 28px rgba(245, 158, 11, 0.18);
+      animation: badgePop .5s ease
+    }
+
+    .badge-box.show {
+      display: block
+    }
+
+    @keyframes badgePop {
+      0% {
+        transform: scale(.85);
+        opacity: 0
+      }
+
+      100% {
+        transform: scale(1);
+        opacity: 1
+      }
+    }
+
+    .badge-box .bicon {
+      font-size: 46px;
+      margin-bottom: 8px
+    }
+
+    .badge-box h4 {
+      font-size: 17px;
+      font-weight: 900;
+      color: var(--gold);
+      margin-bottom: 6px
+    }
+
+    .badge-box p {
+      font-size: 13px;
+      color: var(--muted);
+      max-width: 420px;
+      margin: 0 auto
+    }
+
+    @media(max-width:768px) {
+      .nav-links {
+        display: none;
+        position: fixed;
+        inset: 58px 0 0;
+        background: #fff;
+        flex-direction: column;
+        padding: 20px;
+        gap: 6px;
+        z-index: 999;
+        border-top: 1px solid var(--border);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.10)
+      }
+
+      .nav-links.open {
+        display: flex
+      }
+
+      .nav-links a {
+        font-size: 15px;
+        padding: 12px 16px
+      }
+
+      .nav-ham {
+        display: block
+      }
+
+      .g2,
+      .g3,
+      .g4,
+      .vs-grid,
+      .survey-grid {
+        grid-template-columns: 1fr
+      }
+
+      .hero-kpis {
+        flex-direction: column;
+        border-radius: 16px
+      }
+
+      .kpi {
+        border-right: none;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.2)
+      }
+
+      .kpi:last-child {
+        border-bottom: none
+      }
+
+      section {
+        padding: 56px 16px
+      }
+
+      .afford-visual {
+        grid-template-columns: repeat(3, 1fr)
+      }
+
+      .calc-row {
+        flex-direction: column;
+        align-items: flex-start
+      }
+
+      .calc-input {
+        width: 100%
+      }
+
+      .theory-flow {
+        justify-content: flex-start
+      }
+
+      .compare-wrap {
+        height: 340px
+      }
+
+      .compare-desc {
+        max-width: 100%
+      }
+
+      #exploreTracker {
+        right: 12px;
+        bottom: 12px;
+        padding: 8px 12px 8px 10px
+      }
+
+      .et-text {
+        display: none
+      }
+
+      .et-panel {
+        width: 180px
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <nav id="mainNav">
+    <div class="nav-inner">
+      <div class="nav-logo">MLN122 — Nhóm 2</div>
+      <div class="nav-links" id="navLinks">
+        <a href="#theory">Lý luận</a><a href="#commercial">Thương nghiệp</a><a href="#interest">Lợi tức</a><a
+          href="#landrent">Địa tô</a><a href="#money">Tiền đẻ tiền</a><a href="#speculation">Sốt đất</a><a
+          href="#quiz">Quiz</a><a href="#refs">Nguồn</a>
+      </div>
+      <button class="nav-ham" onclick="toggleNav()"><i class="fas fa-bars"></i></button>
+    </div>
+  </nav>
+
+  <!-- EXPLORE TRACKER -->
+  <div id="exploreTracker" onclick="this.classList.toggle('open')">
+    <div class="et-panel" id="etPanel"></div>
+    <svg class="et-ring" viewBox="0 0 36 36">
+      <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none"
+        stroke="#E2E8F0" stroke-width="3.5" />
+      <path id="etRingFill" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+        fill="none" stroke="#DC2626" stroke-width="3.5" stroke-dasharray="0,100" stroke-linecap="round" />
+    </svg>
+    <div class="et-text" id="etText">0/6<small>Đã khám phá</small></div>
+  </div>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-float" id="heroFloat"></div>
+    <div class="hero-content">
+      <div class="hero-badge"><i class="fas fa-star"></i> KINH TẾ CHÍNH TRỊ MÁC-LÊNIN — CHƯƠNG 3</div>
+      <h1 class="hero-title">
+        <span class="l1">PHÂN CHIA GIÁ TRỊ THẶNG DƯ</span>
+        <span class="l2">&amp; Tiền Đẻ Ra Tiền</span>
+      </h1>
+      <p class="hero-desc">Từ lý luận Marx đến thực tiễn Việt Nam: lợi nhuận Điện Máy Xanh, lãi suất ngân hàng và cơn
+        sốt đất 2020–2024 đều là <strong style="color:#fff">các hình thức phân phối giá trị thặng dư</strong>.</p>
+      <div class="hero-kpis">
+        <div class="kpi">
+          <div class="val" data-count="23.1">0</div>
+          <div class="lbl">% Biên LN gộp MWG 2022</div>
+          <div class="src"><a
+              href="https://cafef.vn/du-lieu/bao-cao-tai-chinh/mwg/incsta/2022/4/0/0/ket-qua-hoat-dong-kinh-doanh-cong-ty-co-phan-dau-tu-the-gioi-di-dong.chn"
+              target="_blank">↗ CafeF BCTC</a></div>
+        </div>
+        <div class="kpi">
+          <div class="val" data-count="58">0</div>
+          <div class="lbl">Triệu đ/m² — đỉnh giá đất nền Bình Dương (H1/2022)</div>
+          <div class="src"><a
+              href="https://thanhnien.vn/chuyen-dong-moi-tren-thi-truong-dat-nen-binh-duong-1851483548.htm"
+              target="_blank">↗ DKRA via Thanh Niên</a></div>
+        </div>
+        <div class="kpi">
+          <div class="val" data-count="4.2">0</div>
+          <div class="lbl">% NIM Techcombank 2023</div>
+          <div class="src"><a href="https://techcombank.com/en/investors/annual-report/2023/bank-wide-management-report"
+              target="_blank">↗ TCB Annual Report</a></div>
+        </div>
+        <div class="kpi">
+          <div class="val" data-count="34.5">0</div>
+          <div class="lbl">Năm lương mua 100m² đất BD (TB H1/2022)</div>
+          <div class="src"><a
+              href="https://cafebiz.vn/giau-co-binh-duong-thu-nhap-binh-quan-cao-nhat-ca-nuoc-bo-xa-ca-ha-noi-va-tp-hcm-gap-4-lan-tinh-thap-nhat-176230506114232935.chn"
+              target="_blank">↗ GSO via CafeBiz</a></div>
+        </div>
+      </div>
+      <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+        <a href="#theory" class="btn btn-gold"><i class="fas fa-book-open"></i> Xem lý luận</a>
+        <a href="#quiz" class="btn btn-outline"><i class="fas fa-gamepad"></i> Chơi Quiz</a>
+      </div>
+    </div>
+    <div class="scroll-arrow"><i class="fas fa-chevron-down"></i></div>
+  </section>
+
+  <!-- THEORY -->
+  <section id="theory">
+    <div class="container">
+      <div class="sec-badge badge-red"><i class="fas fa-book-open"></i> Lý luận Mác-Lênin</div>
+      <h2 class="sec-title">Giá trị thặng dư phân chia như thế nào?</h2>
+      <p class="sec-sub">Công nhân làm việc tạo ra <strong style="color:var(--red)">giá trị thặng dư (m)</strong>. Qua
+        hệ thống TBCN, phần giá trị này được phân phối cho 3 tầng lớp nhà tư bản khác nhau.</p>
+      <div class="theory-flow">
+        <div class="tf-box" id="tfBox-factory" onclick="showFlowDetail('factory')"
+          style="border-color:rgba(220,38,38,0.3);background:#FEF2F2">
+          <div class="tf-icon">🏭</div>
+          <div class="tf-label" style="color:var(--red)">Nhà máy<br>sản xuất</div>
+          <div class="tf-sub">Công nhân tạo ra<br><strong>m (GTTD)</strong></div>
+          <div class="tf-hint"><i class="fas fa-hand-pointer"></i> Bấm xem chi tiết</div>
+        </div>
+        <div class="tf-arrow">⟶</div>
+        <div class="tf-box" id="tfBox-m" onclick="showFlowDetail('m')"
+          style="border-color:rgba(245,158,11,0.4);background:#FFFBEB">
+          <div class="tf-icon">💰</div>
+          <div class="tf-label" style="color:var(--gold)">Giá trị thặng dư (m)</div>
+          <div class="tf-sub">T→H→T'<br>T' &gt; T</div>
+          <div class="tf-hint"><i class="fas fa-hand-pointer"></i> Bấm xem chi tiết</div>
+        </div>
+        <div class="tf-arrow">⟶</div>
+        <div class="tf-split">
+          <div class="tf-split-item" id="tfBox-pTN" onclick="showFlowDetail('pTN')"
+            style="border-color:rgba(220,38,38,0.3);color:var(--red);background:#FEF2F2">🛒 Lợi
+            nhuận thương nghiệp <em>(p<sub>TN</sub>)</em></div>
+          <div class="tf-split-item" id="tfBox-z" onclick="showFlowDetail('z')"
+            style="border-color:rgba(8,145,178,0.3);color:var(--teal);background:#ECFEFF">🏦
+            Lợi tức <em>(z)</em></div>
+          <div class="tf-split-item" id="tfBox-R" onclick="showFlowDetail('R')"
+            style="border-color:rgba(124,58,237,0.3);color:var(--purple);background:#F5F3FF">
+            🏘️ Địa tô tư bản chủ nghĩa <em>(R)</em></div>
+        </div>
+      </div>
+      <div class="flow-detail" id="flowDetail">
+        <div class="flow-detail-inner" id="flowDetailInner"></div>
+      </div>
+      <div class="g3">
+        <div class="card card-glow-red">
+          <div class="ibox ibox-red"><i class="fas fa-store"></i></div>
+          <h3 style="font-size:17px;font-weight:800;margin-bottom:8px;color:var(--text)">Lợi nhuận thương nghiệp</h3>
+          <p style="font-size:13.5px;color:var(--muted);line-height:1.65">Thương nhân mua <span class="hl-red">thấp hơn
+              giá trị</span>, bán <span class="hl">bằng giá trị</span>. Phần chênh = GTTD từ nhà SX nhường. <strong
+              style="color:var(--text)">Thương nhân không tạo ra GTTD.</strong></p>
+          <div style="margin-top:14px"><span class="pill pill-red">Điện Máy Xanh</span> <span class="pill pill-red">FPT
+              Shop</span></div>
+        </div>
+        <div class="card card-glow-teal">
+          <div class="ibox ibox-teal"><i class="fas fa-piggy-bank"></i></div>
+          <h3 style="font-size:17px;font-weight:800;margin-bottom:8px;color:var(--text)">Lợi tức tín dụng</h3>
+          <p style="font-size:13.5px;color:var(--muted);line-height:1.65">Công thức: <span class="hl-teal">T →
+              T'</span>. Người vay đầu tư SX → tạo GTTD → chia lại cho chủ nợ. Tiền "đẻ ra tiền" thực chất là <strong
+              style="color:var(--text)">GTTD từ lao động</strong>.</p>
+          <div style="margin-top:14px"><span class="pill pill-teal">Techcombank</span> <span
+              class="pill pill-teal">Vietcombank</span></div>
+        </div>
+        <div class="card" style="border-color:rgba(124,58,237,0.2);box-shadow:0 4px 24px rgba(124,58,237,0.07)">
+          <div class="ibox ibox-purple"><i class="fas fa-map-marker-alt"></i></div>
+          <h3 style="font-size:17px;font-weight:800;margin-bottom:8px;color:var(--text)">Địa tô TBCN</h3>
+          <p style="font-size:13.5px;color:var(--muted);line-height:1.65">Kinh doanh trên đất phải trả địa tô cho địa
+            chủ — phần GTTD. <strong style="color:var(--text)">Địa tô tuyệt đối</strong>: mọi đất đều có. <strong
+              style="color:var(--text)">Địa tô chênh lệch</strong>: đất tốt hơn thu nhiều hơn.</p>
+          <div style="margin-top:14px"><span class="pill"
+              style="background:rgba(124,58,237,0.10);color:var(--purple)">Bình Dương</span> <span class="pill"
+              style="background:rgba(124,58,237,0.10);color:var(--purple)">Long An</span></div>
+        </div>
+      </div>
+      <div class="qbox" style="margin-top:28px">
+        <p>"Tư bản không phải là một vật; nó là một <strong>quan hệ xã hội</strong> nhất định giữa người với người, được
+          thể hiện thông qua các vật và đội lốt vỏ vật."</p>
+        <div class="cite">— Karl Marx, <em>Tư bản luận</em>, Quyển I | <a
+            href="https://archive.org/details/tu-ban-quyen-1" target="_blank" style="color:var(--teal)">archive.org — Tư
+            bản (Quyển I)</a></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- COMMERCIAL -->
+  <section id="commercial" class="sec-light">
+    <div class="container">
+      <div class="sec-badge badge-red"><i class="fas fa-shopping-cart"></i> Hình thức 1</div>
+      <h2 class="sec-title">Lợi nhuận thương nghiệp</h2>
+      <p class="sec-sub">Điện Máy Xanh &amp; FPT Shop không sản xuất gì cả, nhưng hưởng GTTD thông qua chênh lệch giá
+        mua — giá bán hàng hóa.</p>
+      <div class="g2" style="margin-bottom:28px">
+        <div>
+          <div class="markup-card" style="margin-bottom:20px">
+            <div class="markup-product">📺</div>
+            <div class="markup-name">Tivi Samsung 55" tại Điện Máy Xanh</div>
+            <div class="price-bar-visual">
+              <div class="price-cost" id="tvCostBar">Giá vốn từ nhà phân phối: ~14,000,000₫</div>
+              <div class="price-margin" id="tvMarginBar">GTTD ~21%</div>
+            </div>
+            <div class="price-labels">
+              <span style="color:var(--muted)">Nhà SX "nhường" phần này</span>
+              <span style="color:var(--red);font-weight:700" id="tvSellLabel">Giá bán lẻ: ~16,900,000₫</span>
+            </div>
+            <div class="range-row">
+              <div class="range-top">Kéo để thử mức markup khác: <strong id="tvMarkupVal">21%</strong></div>
+              <input type="range" class="rng" id="tvMarkup" min="5" max="40" step="1" value="21"
+                oninput="updateTvMarkup()">
+            </div>
+            <div class="markup-insight">
+              <strong style="color:var(--gold)">Phân tích KTCT:</strong> Phần <strong id="tvDiffLabel">~2.9
+                triệu</strong> chênh lệch là GTTD do công nhân
+              nhà máy Samsung tạo ra, được nhà SX "nhường" cho thương nhân để đảm nhận phân phối. Điện Máy Xanh
+              <em>không tạo ra</em> chiếc tivi này. Giá vốn 14 triệu là cố định (thực tế thị trường) — chỉ % markup là
+              giả định để bạn thử nghiệm.
+            </div>
+          </div>
+          <div class="g2" style="gap:14px">
+            <div class="card-sm"
+              style="text-align:center;background:linear-gradient(135deg,#FEF2F2,#fff);border-color:rgba(220,38,38,0.15)">
+              <div style="font-size:38px;font-weight:900;color:var(--red)">23<span style="font-size:16px">%</span></div>
+              <div style="font-size:12px;color:var(--muted);margin-top:5px">Biên LN gộp MWG 2022</div>
+              <div style="font-size:11px;color:var(--gold);margin-top:3px">Doanh thu: 133,405 tỷ VND</div>
+            </div>
+            <div class="card-sm"
+              style="text-align:center;background:linear-gradient(135deg,#EEF2FF,#fff);border-color:rgba(67,97,238,0.15)">
+              <div style="font-size:38px;font-weight:900;color:var(--blue)">15.6<span style="font-size:16px">%</span>
+              </div>
+              <div style="font-size:12px;color:var(--muted);margin-top:5px">Biên LN gộp FPT Retail 2022</div>
+              <div style="font-size:11px;color:var(--gold);margin-top:3px">Doanh thu: 30,166 tỷ VND (tự tính từ 4 quý)
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="chart-card">
+          <h3>Biên lợi nhuận gộp 2020–2024</h3>
+          <div class="ch-sub">MWG (Điện Máy Xanh) vs FPT Retail (%) theo năm — tự tính từ doanh thu &amp; giá vốn 4
+            quý/năm (CafeF BCTC)</div>
+          <div class="ch-wrap"><canvas id="chartCommercial"></canvas></div>
+          <div
+            style="font-size:11px;color:var(--muted);margin-top:10px;line-height:1.6;background:#F8FAFC;border-radius:8px;padding:8px 12px">
+            <strong>Cách tính:</strong> Cộng doanh thu thuần và giá vốn hàng bán 4 quý trong báo cáo tài chính hợp nhất
+            từng công ty (CafeF), rồi tính Biên LN gộp = (Doanh thu − Giá vốn) ÷ Doanh thu.
+          </div>
+          <div style="margin-top:10px">
+            <a href="https://cafef.vn/du-lieu/bao-cao-tai-chinh/mwg/incsta/2024/4/0/0/ket-qua-hoat-dong-kinh-doanh-cong-ty-co-phan-dau-tu-the-gioi-di-dong.chn"
+              target="_blank" class="src-chip"><i class="fas fa-external-link-alt"></i> CafeF — BCTC MWG theo quý</a>
+            <a href="https://cafef.vn/du-lieu/bao-cao-tai-chinh/frt/incsta/2024/4/0/0/ket-qua-hoat-dong-kinh-doanh-cong-ty-co-phan-ban-le-ky-thuat-so-fpt.chn"
+              target="_blank" class="src-chip"><i class="fas fa-external-link-alt"></i> CafeF — BCTC FPT Retail theo
+              quý</a>
+          </div>
+        </div>
+      </div>
+      <div class="card" style="margin-bottom:28px;overflow-x:auto">
+        <h3 style="font-size:15px;font-weight:800;margin-bottom:14px"><i class="fas fa-table"
+            style="color:var(--blue)"></i> Bảng đầy đủ biên lợi nhuận gộp 2020–2024</h3>
+        <table style="width:100%;border-collapse:collapse;font-size:13px">
+          <thead>
+            <tr style="border-bottom:2px solid var(--border)">
+              <th style="text-align:left;padding:8px;color:var(--muted)">Năm</th>
+              <th style="text-align:center;padding:8px;color:var(--red)">MWG / Điện Máy Xanh</th>
+              <th style="text-align:center;padding:8px;color:var(--blue)">FPT Retail / FPT Shop</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="border-bottom:1px solid rgba(0,0,0,0.06)">
+              <td style="padding:8px;color:var(--text)">2020</td>
+              <td style="text-align:center;padding:8px;font-weight:800;color:var(--red)">22.1%</td>
+              <td style="text-align:center;padding:8px;font-weight:800;color:var(--blue)">13.9%</td>
+            </tr>
+            <tr style="border-bottom:1px solid rgba(0,0,0,0.06)">
+              <td style="padding:8px;color:var(--text)">2021</td>
+              <td style="text-align:center;padding:8px;font-weight:800;color:var(--red)">22.5%</td>
+              <td style="text-align:center;padding:8px;font-weight:800;color:var(--blue)">13.8%</td>
+            </tr>
+            <tr style="border-bottom:1px solid rgba(0,0,0,0.06)">
+              <td style="padding:8px;color:var(--text)">2022</td>
+              <td style="text-align:center;padding:8px;font-weight:800;color:var(--red)">23.1%</td>
+              <td style="text-align:center;padding:8px;font-weight:800;color:var(--blue)">15.6%</td>
+            </tr>
+            <tr style="border-bottom:1px solid rgba(0,0,0,0.06)">
+              <td style="padding:8px;color:var(--text)">2023</td>
+              <td style="text-align:center;padding:8px;font-weight:800;color:var(--red)">19.1%</td>
+              <td style="text-align:center;padding:8px;font-weight:800;color:var(--blue)">16.2%</td>
+            </tr>
+            <tr>
+              <td style="padding:8px;color:var(--text)">2024</td>
+              <td style="text-align:center;padding:8px;font-weight:800;color:var(--red)">20.5%</td>
+              <td style="text-align:center;padding:8px;font-weight:800;color:var(--blue)">18.9%</td>
+            </tr>
+          </tbody>
+        </table>
+        <p style="font-size:11px;color:var(--muted);margin-top:10px;line-height:1.6">Tất cả số liệu trên tự tính bằng
+          cách cộng doanh thu thuần và giá vốn hàng bán 4 quý từ báo cáo tài chính hợp nhất theo quý trên CafeF, rồi
+          tính
+          Biên LN gộp = (Doanh thu − Giá vốn) ÷ Doanh thu. Tổng doanh thu suy ra từ phép cộng đều khớp với số liệu doanh
+          thu cả năm đã công bố chính thức (vd. MWG 2022: 133,405 tỷ; MWG 2020: 108,546 tỷ), xác nhận độ chính xác phép
+          tính.</p>
+      </div>
+      <div class="card" style="margin-bottom:28px">
+        <h3 style="font-size:15px;font-weight:800;margin-bottom:18px"><i class="fas fa-chart-bar"
+            style="color:var(--gold)"></i> Biên lợi nhuận gộp MWG theo năm — Quy luật cạnh tranh thương nghiệp</h3>
+        <div class="pbar-wrap">
+          <div class="pbar-top"><span class="k">2020</span><span class="v">22.1%</span></div>
+          <div class="pbar-track">
+            <div class="pbar-fill pbar-blue" data-w="95.7%"></div>
+          </div>
+        </div>
+        <div class="pbar-wrap">
+          <div class="pbar-top"><span class="k">2021</span><span class="v">22.5%</span></div>
+          <div class="pbar-track">
+            <div class="pbar-fill pbar-blue" data-w="97.4%"></div>
+          </div>
+        </div>
+        <div class="pbar-wrap">
+          <div class="pbar-top"><span class="k">2022 — Đỉnh</span><span class="v" style="color:var(--gold)">23.1%</span>
+          </div>
+          <div class="pbar-track">
+            <div class="pbar-fill pbar-gold" data-w="100%"></div>
+          </div>
+        </div>
+        <div class="pbar-wrap">
+          <div class="pbar-top"><span class="k">2023 — Cả năm</span><span class="v"
+              style="color:var(--red)">19.1%</span></div>
+          <div class="pbar-track">
+            <div class="pbar-fill pbar-red" data-w="78.4%"></div>
+          </div>
+        </div>
+        <div class="pbar-wrap">
+          <div class="pbar-top"><span class="k">2024 — Phục hồi</span><span class="v"
+              style="color:var(--teal)">20.5%</span></div>
+          <div class="pbar-track">
+            <div class="pbar-fill pbar-teal" data-w="88.7%"></div>
+          </div>
+        </div>
+        <div class="qbox" style="margin-top:20px;margin-bottom:0">
+          <p>Biên LN gộp MWG ổn định quanh <strong>22–22.5%</strong> giai đoạn 2020–2021, đạt đỉnh <strong
+              style="color:var(--gold)">23.1% năm 2022</strong> nhờ tái cơ cấu Bách Hóa Xanh, rồi rơi mạnh xuống <strong
+              style="color:var(--red)">19.1% năm 2023</strong> do chiến tranh giá để giành thị phần, trước khi phục hồi
+            lên <strong style="color:var(--teal)">20.5% năm 2024</strong>. Đúng với quy luật Marx: <strong
+              style="color:var(--text)">cạnh tranh thương nghiệp</strong> → tỷ suất LN bình quân hóa.</p>
+        </div>
+      </div>
+      <div class="vs-grid">
+        <div class="comp-card highlight">
+          <h4><span style="font-size:20px">⚡</span> Điện Máy Xanh (MWG)</h4>
+          <div class="comp-row"><span class="k">Doanh thu 2022</span><span class="v hl">133,405 tỷ</span></div>
+          <div class="comp-row"><span class="k">Biên LN gộp</span><span class="v" style="color:var(--red)">~23.1%</span>
+          </div>
+          <div class="comp-row"><span class="k">LN ròng 2023</span><span class="v">~168 tỷ (thấp kỷ lục)</span></div>
+          <div class="comp-row"><span class="k">Số cửa hàng</span><span class="v">&gt;1,800 điểm</span></div>
+          <div class="comp-row"><span class="k">Lợi thế</span><span class="v pill pill-gold">Quy mô lớn nhất</span>
+          </div>
+        </div>
+        <div class="vs-label">VS</div>
+        <div class="comp-card">
+          <h4><span style="font-size:20px">💻</span> FPT Shop (FRT)</h4>
+          <div class="comp-row"><span class="k">Doanh thu 2022</span><span class="v hl">30,166 tỷ</span></div>
+          <div class="comp-row"><span class="k">Biên LN gộp</span><span class="v"
+              style="color:var(--blue)">~15.6%</span></div>
+          <div class="comp-row"><span class="k">LN ròng</span><span class="v">~1.3% (~398 tỷ)</span></div>
+          <div class="comp-row"><span class="k">Số cửa hàng</span><span class="v">~786 điểm</span></div>
+          <div class="comp-row"><span class="k">Lợi thế</span><span class="v pill pill-teal">Chuyên Apple</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- INTEREST -->
+  <section id="interest">
+    <div class="container">
+      <div class="sec-badge badge-teal"><i class="fas fa-university"></i> Hình thức 2</div>
+      <h2 class="sec-title">Lợi tức &amp; Tín dụng ngân hàng</h2>
+      <p class="sec-sub">Ngân hàng không tạo ra GTTD. Lợi nhuận của họ là <strong style="color:var(--teal)">phần GTTD
+          người đi vay chia lại</strong> để sử dụng vốn đầu tư.</p>
+
+      <div class="card"
+        style="margin-bottom:28px;background:linear-gradient(135deg,#ECFEFF,#fff);border-color:rgba(8,145,178,0.2)">
+        <div
+          style="text-align:center;font-size:12px;font-weight:700;color:var(--muted);margin-bottom:16px;text-transform:uppercase;letter-spacing:1px">
+          Cơ chế hoạt động tín dụng ngân hàng</div>
+        <div class="flow-row">
+          <div class="flow-node" style="border-color:rgba(8,145,178,0.3);background:#ECFEFF">
+            <div class="sym" style="color:var(--teal)">👤</div>
+            <div class="desc">Người gửi tiết kiệm<br><strong style="color:var(--gold)">+5.5%/năm</strong></div>
+          </div>
+          <div class="flow-arr">→</div>
+          <div class="flow-node" style="border-color:rgba(245,158,11,0.35);background:#FFFBEB">
+            <div class="sym" style="color:var(--gold)">🏦</div>
+            <div class="desc">Ngân hàng<br><strong style="color:var(--gold)">NIM ~4%</strong></div>
+          </div>
+          <div class="flow-arr">→</div>
+          <div class="flow-node" style="border-color:rgba(220,38,38,0.3);background:#FEF2F2">
+            <div class="sym" style="color:var(--red)">🏭</div>
+            <div class="desc">Doanh nghiệp vay<br><strong style="color:var(--red)">trả 9–13%/năm</strong></div>
+          </div>
+          <div class="flow-arr">→</div>
+          <div class="flow-node" style="border-color:rgba(5,150,105,0.3);background:#F0FDF9">
+            <div class="sym" style="color:var(--green)">💼</div>
+            <div class="desc">Thuê lao động<br>→ tạo <strong style="color:var(--green)">GTTD (m)</strong></div>
+          </div>
+        </div>
+        <div style="text-align:center;font-size:13px;color:var(--muted);margin-top:8px">Phần lãi trả cho NH = <strong
+            style="color:var(--gold)">GTTD</strong> từ người vay tạo ra trong sản xuất, được phân chia lại</div>
+      </div>
+
+      <div class="g3" style="margin-bottom:28px">
+        <div class="card-sm"
+          style="text-align:center;background:linear-gradient(135deg,#ECFEFF,#fff);border-color:rgba(8,145,178,0.2)">
+          <div style="font-size:38px;font-weight:900;color:var(--teal);line-height:1">4.2<span
+              style="font-size:16px">%</span></div>
+          <div style="font-size:12px;color:var(--muted);margin-top:6px">NIM Techcombank 2023</div>
+        </div>
+        <div class="card-sm"
+          style="text-align:center;background:linear-gradient(135deg,#EEF2FF,#fff);border-color:rgba(67,97,238,0.2)">
+          <div style="font-size:38px;font-weight:900;color:var(--blue);line-height:1">~2.9<span
+              style="font-size:16px">%</span></div>
+          <div style="font-size:12px;color:var(--muted);margin-top:6px">NIM Vietcombank 2023 (ước tính)</div>
+        </div>
+        <div class="card-sm"
+          style="text-align:center;background:linear-gradient(135deg,#FEF2F2,#fff);border-color:rgba(220,38,38,0.2)">
+          <div style="font-size:38px;font-weight:900;color:var(--red);line-height:1">13<span
+              style="font-size:16px">%</span></div>
+          <div style="font-size:12px;color:var(--muted);margin-top:6px">Lãi vay mua nhà đỉnh Q4/2022</div>
+        </div>
+        <div class="card-sm"
+          style="text-align:center;background:linear-gradient(135deg,#FFFBEB,#fff);border-color:rgba(245,158,11,0.2)">
+          <div style="font-size:30px;font-weight:900;color:var(--gold);line-height:1">22,900</div>
+          <div style="font-size:12px;color:var(--muted);margin-top:6px">Tỷ VND LN trước thuế Techcombank 2023</div>
+        </div>
+        <div class="card-sm"
+          style="text-align:center;background:linear-gradient(135deg,#FEF2F2,#fff);border-color:rgba(220,38,38,0.2)">
+          <div style="font-size:30px;font-weight:900;color:var(--red);line-height:1">41,244</div>
+          <div style="font-size:12px;color:var(--muted);margin-top:6px">Tỷ VND LN trước thuế Vietcombank 2023</div>
+        </div>
+      </div>
+
+      <div class="g2">
+        <div>
+          <div class="card" style="margin-bottom:20px">
+            <h3 style="font-size:15px;font-weight:800;margin-bottom:18px"><i class="fas fa-sliders-h"
+                style="color:var(--teal)"></i> NIM các ngân hàng lớn 2023</h3>
+            <div class="pbar-wrap">
+              <div class="pbar-top"><span class="k">Techcombank — NIM 4.2%</span><span class="v"
+                  style="color:var(--teal)">LN 22,900 tỷ</span></div>
+              <div class="pbar-track">
+                <div class="pbar-fill pbar-teal" data-w="55%"></div>
+              </div>
+            </div>
+            <div class="pbar-wrap">
+              <div class="pbar-top"><span class="k">MB Bank — NIM ~4.0%</span><span class="v">LN 26,300 tỷ</span></div>
+              <div class="pbar-track">
+                <div class="pbar-fill pbar-blue" data-w="63%"></div>
+              </div>
+            </div>
+            <div class="pbar-wrap">
+              <div class="pbar-top"><span class="k">BIDV — NIM ~2.9%</span><span class="v">LN trước thuế &gt;27,400
+                  tỷ</span></div>
+              <div class="pbar-track">
+                <div class="pbar-fill pbar-red" data-w="67%"></div>
+              </div>
+            </div>
+            <div class="pbar-wrap">
+              <div class="pbar-top"><span class="k">Vietcombank — NIM ~2.9%</span><span class="v"
+                  style="color:var(--gold)">LN trước thuế 41,244 tỷ 🏆</span></div>
+              <div class="pbar-track">
+                <div class="pbar-fill pbar-gold" data-w="100%"></div>
+              </div>
+            </div>
+            <div style="margin-top:12px">
+              <a href="https://vnexpress.net/techcombank-cong-bo-ket-qua-kinh-doanh-nam-2023-4704172.html"
+                target="_blank" class="src-chip"><i class="fas fa-external-link-alt"></i> VnExpress — TCB 2023</a>
+              <a href="https://cafef.vn/loi-nhuan-hon-41000-ty-cua-vietcombank-nam-2023-den-tu-dau-188240131132557341.chn"
+                target="_blank" class="src-chip"><i class="fas fa-external-link-alt"></i> CafeF — VCB 41,244 tỷ</a>
+            </div>
+          </div>
+          <div class="qbox">
+            <p><strong style="color:var(--teal)">Ví dụ cụ thể:</strong> Bạn mở quán cà phê bằng vốn vay 1 tỷ, trả lãi
+              <strong>100 triệu/năm (10%)</strong>. 100 triệu đó đến từ <strong style="color:var(--text)">lợi nhuận nhân
+                viên quán tạo ra</strong>. Ngân hàng = tư bản cho vay, hưởng GTTD từ lao động của nhân viên quán bạn.
+            </p>
+            <div class="cite">Ứng dụng K. Marx, <em>Tư bản luận</em> Quyển III, Ch.21–24</div>
+          </div>
+        </div>
+        <div class="chart-card">
+          <h3>Lãi suất Việt Nam 2020–2024</h3>
+          <div class="ch-sub">Cho vay vs Tiền gửi (12T) vs NIM — Nguồn: NHNN</div>
+          <div class="ch-wrap"><canvas id="chartInterest"></canvas></div>
+          <a href="https://www.sbv.gov.vn" target="_blank" class="src-chip"
+            style="margin-top:12px;display:inline-flex"><i class="fas fa-external-link-alt"></i> sbv.gov.vn</a>
+        </div>
+      </div>
+      <div class="calc-box" style="margin-top:28px">
+        <h3 style="font-size:16px;font-weight:800;margin-bottom:6px;color:var(--text)">🧮 Mô phỏng khoản vay: Lãi
+          của bạn đi về đâu?</h3>
+        <p style="font-size:12.5px;color:var(--muted);margin-bottom:14px">Nhập một khoản vay để tự thấy ngân hàng giữ
+          lại bao nhiêu (NIM) và trả lại người gửi tiết kiệm bao nhiêu — phần NH giữ lại chính là GTTD bạn (người vay)
+          phải chia lại.</p>
+        <div class="calc-row">
+          <div class="calc-label">Số tiền vay (triệu VND)</div><input class="calc-input" type="number" id="loanAmount"
+            value="1000" min="10" oninput="calcLoan()">
+        </div>
+        <div class="calc-row">
+          <div class="calc-label">Lãi suất cho vay (%/năm)</div><input class="calc-input" type="number" id="loanRate"
+            value="10" min="1" max="30" step="0.1" oninput="calcLoan()">
+        </div>
+        <div class="calc-row">
+          <div class="calc-label">Lãi suất huy động (%/năm)</div><input class="calc-input" type="number"
+            id="depositRate" value="5.5" min="0.5" max="20" step="0.1" oninput="calcLoan()">
+        </div>
+        <div class="flow-row" style="margin:20px 0 8px" id="loanFlowRow">
+          <div class="flow-node" style="border-color:rgba(220,38,38,0.3);background:#FEF2F2">
+            <div class="sym" style="color:var(--red)" id="loanInterestTotal">100 tr</div>
+            <div class="desc">Bạn trả lãi/năm</div>
+          </div>
+          <div class="flow-arr">→</div>
+          <div class="flow-node" style="border-color:rgba(245,158,11,0.35);background:#FFFBEB">
+            <div class="sym" style="color:var(--gold)" id="loanNim">45 tr</div>
+            <div class="desc">NH giữ lại (NIM)</div>
+          </div>
+          <div class="flow-arr">→</div>
+          <div class="flow-node" style="border-color:rgba(8,145,178,0.3);background:#ECFEFF">
+            <div class="sym" style="color:var(--teal)" id="loanDepositPay">55 tr</div>
+            <div class="desc">Trả người gửi tiết kiệm</div>
+          </div>
+        </div>
+        <p style="font-size:11px;color:var(--muted);margin-top:10px;line-height:1.5">* Mô phỏng đơn giản hóa (bỏ qua
+          chi phí vận hành, dự phòng rủi ro...) để minh họa nguyên lý phân chia GTTD qua tín dụng.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- LAND RENT -->
+  <section id="landrent" class="sec-light">
+    <div class="container">
+      <div class="sec-badge badge-purple"><i class="fas fa-map"></i> Hình thức 3</div>
+      <h2 class="sec-title">Địa tô tư bản chủ nghĩa</h2>
+      <p class="sec-sub">Giá đất nền Thủ Dầu Một &amp; Dĩ An (Bình Dương) tăng <span class="hl-red">+30–60%</span> trong
+        2020–2021, đạt đỉnh bình quân <span class="hl-red">33.5 triệu/m²</span> (cao nhất 58 triệu/m²) nửa đầu 2022 —
+        minh chứng sinh động nhất về địa tô TBCN trong thực tiễn Việt Nam.</p>
+      <div style="margin-bottom:28px">
+        <div class="compare-wrap" id="compareWrap">
+          <div class="compare-panel compare-before">
+            <div class="compare-label" style="color:var(--green)">TRƯỚC 2020</div>
+            <div class="compare-value" style="color:var(--green)">Ổn định</div>
+            <div class="compare-desc">Đất nền Bình Dương giao dịch chủ yếu theo nhu cầu thực, chưa có sóng đầu cơ lớn
+              — giá phản ánh đúng địa tô chênh lệch theo hạ tầng thực tế.</div>
+          </div>
+          <div class="compare-panel compare-after" id="comparePanelAfter">
+            <div class="compare-label" style="color:var(--red)">ĐỈNH H1/2022</div>
+            <div class="compare-value" style="color:var(--red)">33.5–58 triệu/m²</div>
+            <div class="compare-desc">Sau khi tăng 30–60% trong 2020–2021, giá đất nền Bình Dương đạt bình quân 33.5
+              triệu/m², cao nhất 58 triệu/m² — đầu cơ tách giá khỏi giá trị sử dụng thực (DKRA Vietnam).</div>
+          </div>
+          <div class="compare-divider" id="compareDivider">
+            <div class="compare-handle"><i class="fas fa-arrows-alt-h"></i></div>
+          </div>
+          <input type="range" class="compare-range" id="compareRange" min="0" max="100" value="50"
+            oninput="updateCompare()" aria-label="Kéo so sánh trước/sau">
+        </div>
+        <p style="font-size:11px;color:var(--muted);margin-top:8px;text-align:center">↔ Kéo thanh trượt để so sánh
+          giai đoạn trước sốt đất và lúc đỉnh bong bóng H1/2022</p>
+      </div>
+      <div class="g2" style="margin-bottom:28px">
+        <div class="chart-card">
+          <h3>Giá đất nền Bình Dương — Nửa đầu 2022</h3>
+          <div class="ch-sub">Bình quân vs Cao nhất (triệu VND/m²) — DKRA Vietnam, H1/2022</div>
+          <div class="ch-wrap"><canvas id="chartLand"></canvas></div>
+          <div style="margin-top:12px">
+            <a href="https://thanhnien.vn/chuyen-dong-moi-tren-thi-truong-dat-nen-binh-duong-1851483548.htm"
+              target="_blank" class="src-chip"><i class="fas fa-external-link-alt"></i> Thanh Niên — DKRA Vietnam, giá
+              đất Bình Dương</a>
+          </div>
+        </div>
+        <div class="card">
+          <h3 style="font-size:15px;font-weight:800;margin-bottom:20px"><i class="fas fa-history"
+              style="color:var(--purple)"></i> Diễn biến giá đất Bình Dương</h3>
+          <div class="tl">
+            <div class="tl-item">
+              <div class="tl-dot" style="background:var(--green)"></div>
+              <div class="tl-year" style="color:var(--green)">Trước 2020 — Tương đối ổn định</div>
+              <div class="tl-text">Thị trường đất nền Bình Dương giao dịch chủ yếu theo nhu cầu thực, chưa có sóng đầu
+                cơ lớn.</div>
+              <div class="tl-bar-track">
+                <div class="tl-bar-fill" style="background:var(--green)" data-w="15%"></div>
+              </div>
+            </div>
+            <div class="tl-item">
+              <div class="tl-dot" style="background:var(--gold2)"></div>
+              <div class="tl-year" style="color:var(--gold)">2020–2021 — Bùng nổ</div>
+              <div class="tl-text">COVID đẩy tiền nhàn rỗi vào BĐS. Giá đất nền Thủ Dầu Một &amp; Dĩ An tăng <strong
+                  style="color:var(--red)">+30–60%</strong>; Bàu Bàng, Phú Giáo, Bến Cát, Tân Uyên tăng
+                <strong>~20%</strong>. Thông tin quy hoạch hạ tầng — KCN châm ngòi.
+              </div>
+              <div class="tl-bar-track">
+                <div class="tl-bar-fill" style="background:var(--gold2)" data-w="55%"></div>
+              </div>
+            </div>
+            <div class="tl-item">
+              <div class="tl-dot" style="background:var(--red)"></div>
+              <div class="tl-year" style="color:var(--red)">H1/2022 — ĐỈNH BONG BÓNG</div>
+              <div class="tl-text">Bình Dương: bình quân <strong style="color:var(--red)">33.5 triệu/m²</strong>, cao
+                nhất <strong style="color:var(--red)">58 triệu/m²</strong> (DKRA Vietnam). Chỉ số khả năng chi trả cực
+                kỳ nguy hiểm — &gt;34 năm lương cho 100m².</div>
+              <div class="tl-bar-track">
+                <div class="tl-bar-fill" style="background:var(--red)" data-w="100%"></div>
+              </div>
+            </div>
+            <div class="tl-item">
+              <div class="tl-dot" style="background:var(--gold2)"></div>
+              <div class="tl-year" style="color:var(--gold)">2022–2023 — Điều chỉnh</div>
+              <div class="tl-text">Lãi suất tăng mạnh, tín dụng BĐS siết. Thanh khoản đất nền vùng ven sụt giảm mạnh,
+                nhiều nhà đầu cơ mắc kẹt.</div>
+              <div class="tl-bar-track">
+                <div class="tl-bar-fill" style="background:var(--gold2)" data-w="50%"></div>
+              </div>
+            </div>
+            <div class="tl-item">
+              <div class="tl-dot" style="background:var(--teal)"></div>
+              <div class="tl-year" style="color:var(--teal)">2024 — Phục hồi chọn lọc</div>
+              <div class="tl-text">Chỉ vùng có hạ tầng — KCN thực sự hoạt động mới giữ giá. Đúng lý thuyết <strong>địa
+                  tô chênh lệch</strong>.</div>
+              <div class="tl-bar-track">
+                <div class="tl-bar-fill" style="background:var(--teal)" data-w="40%"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="g2">
+        <div class="card" style="border-color:rgba(124,58,237,0.2);background:linear-gradient(135deg,#F5F3FF,#fff)">
+          <div class="ibox ibox-purple"><i class="fas fa-globe"></i></div>
+          <h3 style="font-size:17px;font-weight:800;margin-bottom:10px;color:var(--text)">Địa tô tuyệt đối</h3>
+          <p style="font-size:13.5px;color:var(--muted);line-height:1.7">Tất cả đất đều có địa tô vì đất là tài nguyên
+            khan hiếm có quyền sở hữu tư nhân. Dù xấu đến đâu, sử dụng đất đều phải trả khoản tối thiểu cho địa chủ.</p>
+          <div
+            style="margin-top:14px;font-size:13px;padding:10px 14px;background:rgba(124,58,237,0.07);border-radius:10px;color:var(--muted)">
+            <i class="fas fa-arrow-right" style="color:var(--purple)"></i> Ngay cả đất hoang vùng xa cũng có giá → phản
+            ánh địa tô tuyệt đối
+          </div>
+        </div>
+        <div class="card" style="border-color:rgba(8,145,178,0.2);background:linear-gradient(135deg,#ECFEFF,#fff)">
+          <div class="ibox ibox-teal"><i class="fas fa-chart-line"></i></div>
+          <h3 style="font-size:17px;font-weight:800;margin-bottom:10px;color:var(--text)">Địa tô chênh lệch</h3>
+          <p style="font-size:13.5px;color:var(--muted);line-height:1.7">Đất gần KCN, trung tâm, quy hoạch tốt → năng
+            suất kinh doanh cao hơn → địa tô cao hơn. Lý do đất Hoài Đức (Hà Nội) tăng 3–4x khi có thông tin lên quận.
+          </p>
+          <div
+            style="margin-top:14px;font-size:13px;padding:10px 14px;background:rgba(8,145,178,0.07);border-radius:10px;color:var(--muted)">
+            <i class="fas fa-arrow-right" style="color:var(--teal)"></i> Đất cạnh KCN VSIP Bình Dương &gt; đất ruộng
+            cùng huyện → địa tô chênh lệch
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MONEY BEGETS MONEY -->
+  <section id="money">
+    <div class="container">
+      <div class="sec-badge badge-gold"><i class="fas fa-coins"></i> Phân tích tổng hợp</div>
+      <h2 class="sec-title">"Tiền đẻ ra tiền" — Bản chất thực sự</h2>
+      <p class="sec-sub">Nhà tư bản thấy tiền tự sinh tiền (T→T'). Marx chỉ ra đây là <strong
+          style="color:var(--red)">hình thức bề ngoài</strong> che giấu quan hệ bóc lột lao động thực sự.</p>
+      <div class="g2" style="margin-bottom:32px">
+        <div>
+          <div class="card"
+            style="background:linear-gradient(135deg,#FFFBEB,#fff);border-color:rgba(245,158,11,0.2);margin-bottom:20px">
+            <h3 style="font-size:15px;font-weight:800;margin-bottom:16px;color:var(--gold)">⚙️ Công thức tổng quát của
+              Tư bản: T → H → T'</h3>
+            <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;text-align:center">
+              <div style="background:#ECFEFF;border-radius:10px;padding:14px;border:1px solid rgba(8,145,178,0.15)">
+                <div style="font-size:26px;margin-bottom:6px">💵</div>
+                <div style="font-size:13px;font-weight:700;color:var(--teal)">T = Tiền vốn</div>
+                <div style="font-size:11.5px;color:var(--muted);margin-top:4px">1 tỷ VND</div>
+              </div>
+              <div style="background:#FFFBEB;border-radius:10px;padding:14px;border:1px solid rgba(245,158,11,0.15)">
+                <div style="font-size:26px;margin-bottom:6px">👷</div>
+                <div style="font-size:13px;font-weight:700;color:var(--gold)">H = SLĐ + TLSX</div>
+                <div style="font-size:11.5px;color:var(--muted);margin-top:4px">Lao động tạo GTTD</div>
+              </div>
+              <div style="background:#FEF2F2;border-radius:10px;padding:14px;border:1px solid rgba(220,38,38,0.15)">
+                <div style="font-size:26px;margin-bottom:6px">💎</div>
+                <div style="font-size:13px;font-weight:700;color:var(--red)">T' = Tiền + m</div>
+                <div style="font-size:11.5px;color:var(--muted);margin-top:4px">1.2 tỷ VND</div>
+              </div>
+            </div>
+            <div
+              style="text-align:center;margin-top:16px;padding:12px;background:#F0F5FF;border-radius:10px;font-size:13.5px;color:var(--text)">
+              <strong style="color:var(--gold)">+200 triệu</strong> = GTTD do lao động công nhân tạo ra — <em
+                style="color:var(--red)">không phải tiền tự đẻ ra</em>
+            </div>
+          </div>
+          <div class="g3" style="gap:12px">
+            <div class="card-sm" style="text-align:center;background:#FEF2F2;border-color:rgba(220,38,38,0.15)">
+              <div style="font-size:28px;margin-bottom:8px">❌</div>
+              <div style="font-size:12px;font-weight:800;color:var(--red);margin-bottom:6px">Tiền tiết kiệm</div>
+              <div style="font-size:12px;color:var(--muted)">Để yên = không tạo GTTD</div>
+            </div>
+            <div class="card-sm" style="text-align:center;background:#FFFBEB;border-color:rgba(245,158,11,0.2)">
+              <div style="font-size:28px;margin-bottom:8px">✅</div>
+              <div style="font-size:12px;font-weight:800;color:var(--gold);margin-bottom:6px">Tiền vốn</div>
+              <div style="font-size:12px;color:var(--muted)">Thuê lao động → tạo GTTD</div>
+            </div>
+            <div class="card-sm" style="text-align:center;background:#ECFEFF;border-color:rgba(8,145,178,0.15)">
+              <div style="font-size:28px;margin-bottom:8px">🔍</div>
+              <div style="font-size:12px;font-weight:800;color:var(--teal);margin-bottom:6px">Nguồn gốc</div>
+              <div style="font-size:12px;color:var(--muted)">Lao động = nguồn gốc duy nhất</div>
+            </div>
+          </div>
+        </div>
+        <div class="calc-box">
+          <h3 style="font-size:16px;font-weight:800;margin-bottom:18px;color:var(--text)">🧮 Mô phỏng: Vốn → GTTD</h3>
+          <div class="calc-row">
+            <div class="calc-label">Vốn đầu tư (triệu VND)</div><input class="calc-input" type="number" id="calcCapital"
+              value="1000" min="100" oninput="calcProfit()">
+          </div>
+          <div class="calc-row">
+            <div class="calc-label">Ngành kinh doanh</div>
+            <select class="calc-input" id="calcSector" onchange="calcProfit()">
+              <option value="retail">🛒 Bán lẻ (MWG model ~3%)</option>
+              <option value="bank">🏦 Tín dụng (~15%)</option>
+              <option value="land">🏘️ Đất nền (~20%/năm pre-2022)</option>
+              <option value="mfg">🏭 Sản xuất (~8%)</option>
+            </select>
+          </div>
+          <div class="calc-row">
+            <div class="calc-label">Số năm</div><input class="calc-input" type="number" id="calcYears" value="3" min="1"
+              max="10" oninput="calcProfit()">
+          </div>
+          <div class="calc-result">
+            <div class="calc-result-row"><span style="color:var(--muted)">Vốn ban đầu</span><span id="r-capital">1,000
+                triệu</span></div>
+            <div class="calc-result-row"><span style="color:var(--muted)">Tỷ suất LN/năm</span><span
+                id="r-rate">3%</span></div>
+            <div class="calc-result-row"><span style="color:var(--muted)">GTTD/năm</span><span id="r-yearly"
+                style="color:var(--teal)">30 triệu</span></div>
+            <div class="calc-result-row"><span>Tổng GTTD sau <span id="r-yrlbl">3</span> năm</span><span id="r-total">90
+                triệu VND</span></div>
+          </div>
+          <p style="font-size:11px;color:var(--muted);margin-top:10px;line-height:1.5">* Mô phỏng đơn giản để minh họa
+            nguyên lý KTCT.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SPECULATION -->
+  <section id="speculation" class="sec-warm">
+    <div class="container">
+      <div class="sec-badge badge-red"><i class="fas fa-fire"></i> Phân tích thời sự</div>
+      <h2 class="sec-title">Sốt đất: Đầu cơ hay Giá trị?</h2>
+      <p class="sec-sub">Đất không tự tạo ra giá trị. Giá tăng dựng đứng khi hạ tầng không thay đổi tương ứng = <strong
+          style="color:var(--red)">đầu cơ, không phải địa tô thực</strong>.</p>
+
+      <div class="card" style="margin-bottom:28px">
+        <h3 style="font-size:15px;font-weight:800;margin-bottom:6px"><i class="fas fa-home"
+            style="color:var(--red)"></i> Chỉ số khả năng chi trả — Số năm lương để mua 100m² đất (Bình Dương, H1/2022)
+        </h3>
+        <div style="font-size:12px;color:var(--muted);margin-bottom:20px">Thu nhập BQ Bình Dương: <strong>8,076 nghìn
+            đồng/người/tháng = ~97 tr/năm</strong> (GSO — KSMS 2022, cao nhất cả nước) | Bình thường &lt;10 | Cảnh báo
+          10–25 | Bong bóng &gt;25</div>
+        <div class="afford-visual" style="grid-template-columns:repeat(2,1fr)">
+          <div class="afford-year" style="border-color:rgba(245,158,11,0.3);background:#FFFBEB">
+            <div class="yr">Bình quân H1/2022</div>
+            <div class="yrs" style="color:var(--gold)">34.5</div>
+            <div class="abar" style="background:var(--gold2);width:58%"></div><span class="tag tag-warn">Bong
+              bóng</span>
+          </div>
+          <div class="afford-year" style="border-color:rgba(220,38,38,0.3);background:#FEF2F2">
+            <div class="yr" style="color:var(--red)">Cao nhất H1/2022 🔴</div>
+            <div class="yrs" style="color:var(--red)">59.8</div>
+            <div class="abar" style="background:var(--red);width:100%"></div><span class="tag tag-danger">Bong bóng
+              nặng</span>
+          </div>
+        </div>
+        <div
+          style="font-size:11.5px;color:var(--muted);margin-top:8px;padding:8px 12px;background:#FEF9EC;border-radius:8px;border-left:3px solid var(--gold)">
+          Tính theo: Giá đất × 100m² ÷ Thu nhập BQ/năm. VD bình quân: 33.5 tr/m² × 100m² = 3.35 tỷ ÷ 97 tr/năm ≈
+          <strong>34.5 năm</strong>; cao nhất: 58 tr/m² × 100m² = 5.8 tỷ ÷ 97 tr/năm ≈ <strong>59.8 năm</strong>
+        </div>
+        <a href="https://cafebiz.vn/giau-co-binh-duong-thu-nhap-binh-quan-cao-nhat-ca-nuoc-bo-xa-ca-ha-noi-va-tp-hcm-gap-4-lan-tinh-thap-nhat-176230506114232935.chn"
+          target="_blank" class="src-chip"><i class="fas fa-external-link-alt"></i> CafeBiz — GSO: Thu nhập BD 8,076
+          tr/tháng</a>
+        <a href="https://thanhnien.vn/chuyen-dong-moi-tren-thi-truong-dat-nen-binh-duong-1851483548.htm" target="_blank"
+          class="src-chip"><i class="fas fa-external-link-alt"></i> Thanh Niên — DKRA giá đất Bình Dương H1/2022</a>
+      </div>
+
+      <div class="spec-grid">
+        <div class="spec-card red">
+          <h4><i class="fas fa-exclamation-triangle" style="color:var(--red)"></i> Chỉ số Giá/Thu nhập</h4>
+          <p>H1/2022: bình quân 33.5 tr/m² × 100m² = <strong style="color:var(--text)">3.35 tỷ</strong>. Thu nhập BQ
+            Bình Dương: <strong>~97 tr/năm</strong> (GSO 2022: 8,076 nghìn/tháng). Cần <strong
+              style="color:var(--red)">~34.5 năm lương</strong> (không tiêu gì) — vượt xa ngưỡng bong bóng quốc tế
+            (~10–15 năm).</p>
+        </div>
+        <div class="spec-card amber">
+          <h4><i class="fas fa-clock" style="color:var(--gold2)"></i> Đất không tạo GTTD</h4>
+          <p>Đất nền không có công trình = không cho thuê = <strong style="color:var(--text)">không tạo giá trị thặng
+              dư</strong>. Người mua kỳ vọng bán lại cao hơn — đây là đầu cơ thuần túy.</p>
+        </div>
+        <div class="spec-card amber">
+          <h4><i class="fas fa-users" style="color:var(--gold2)"></i> Đòn bẩy &amp; FOMO</h4>
+          <p>2020–2022: Hàng nghìn nhà đầu tư vay NH 60–70% để mua đất vùng ven. Khi lãi tăng (2022), buộc bán cắt lỗ —
+            thanh khoản đóng băng 2023.</p>
+        </div>
+        <div class="spec-card green">
+          <h4><i class="fas fa-check-circle" style="color:var(--green)"></i> Địa tô thực vs Đầu cơ</h4>
+          <p>Đất có KCN hoạt động → <strong style="color:var(--green)">địa tô thực</strong>. Đất bỏ hoang chờ "lên quận"
+            → <strong style="color:var(--red)">đầu cơ</strong> — không có cơ sở GTTD nào cả.</p>
+        </div>
+      </div>
+      <div class="qbox" style="margin-top:24px">
+        <p>"Địa tô không phải là sản phẩm của đất đai mà là sản phẩm của lao động xã hội. Đất đai không tạo ra bất kỳ
+          giá trị nào; chỉ khi kết hợp với lao động mới có giá trị."</p>
+        <div class="cite">— K. Marx, <em>Tư bản luận</em> Quyển III, Ch.37 (bản dịch Quyển I tham khảo tại archive.org)
+          | <a href="https://archive.org/details/tu-ban-quyen-1" target="_blank" style="color:var(--teal)">archive.org —
+            Tư bản (Quyển I)</a></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- QUIZ -->
+  <section id="quiz">
+    <div class="container">
+      <div class="sec-badge badge-blue"><i class="fas fa-gamepad"></i> Minigame tương tác</div>
+      <h2 class="sec-title">Kiểm tra hiểu biết</h2>
+      <p class="sec-sub">6 câu hỏi về GTTD, lợi nhuận, lợi tức và địa tô. Điểm số được lưu trong phiên làm việc này.</p>
+      <div class="quiz-wrap">
+        <div class="q-prog">
+          <div class="q-prog-bar" id="qBar" style="width:0%"></div>
+        </div>
+        <div id="qGame">
+          <div class="q-num" id="qNum">CÂU 1 / 6</div>
+          <div class="q-text" id="qText"></div>
+          <div class="q-opts" id="qOpts"></div>
+          <div class="q-explain" id="qExplain"></div>
+          <div class="q-nav"><button class="btn btn-red" id="qNext" onclick="nextQ()" style="display:none">Câu tiếp theo
+              <i class="fas fa-arrow-right"></i></button></div>
+        </div>
+        <div class="q-score-screen" id="qScore">
+          <div class="sc-n" id="scN">0/6</div>
+          <div class="sc-msg" id="scMsg"></div>
+          <div class="sc-sub" id="scSub"></div>
+          <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+            <button class="btn btn-outline-dark" onclick="resetQ()"><i class="fas fa-redo"></i> Làm lại</button>
+            <a href="#survey" class="btn btn-gold"><i class="fas fa-poll"></i> Tham gia khảo sát</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SURVEY -->
+  <section id="survey">
+    <div class="container">
+      <div class="sec-badge badge-gold"><i class="fas fa-poll"></i> Khảo sát &amp; Tương tác</div>
+      <h2 class="sec-title">Ý kiến của bạn</h2>
+      <p class="sec-sub">Tham gia khảo sát nhanh và xem kết quả ngay lập tức.</p>
+      <div class="survey-grid">
+        <div>
+          <div class="sv-q">1. "Tiền đẻ ra tiền" trong thực tế là:</div>
+          <div class="sv-opts" id="sv1">
+            <button class="sv-opt" onclick="vote(1,'a')">A. Tiền tự nhiên sinh ra tiền — quy luật tự nhiên</button>
+            <button class="sv-opt" onclick="vote(1,'b')">B. Thực chất là GTTD từ lao động được phân phối lại</button>
+            <button class="sv-opt" onclick="vote(1,'c')">C. Chủ yếu do biến động thị trường tài chính</button>
+            <button class="sv-opt" onclick="vote(1,'d')">D. Chưa rõ, cần tìm hiểu thêm</button>
+          </div>
+          <div class="sv-result" id="sv1-res" style="display:none"></div>
+        </div>
+        <div>
+          <div class="sv-q">2. Cơn sốt đất 2020–2022 tại Việt Nam chủ yếu là:</div>
+          <div class="sv-opts" id="sv2">
+            <button class="sv-opt" onclick="vote(2,'a')">A. Phản ánh đúng giá trị thực của đất đai</button>
+            <button class="sv-opt" onclick="vote(2,'b')">B. Đầu cơ — tách biệt khỏi giá trị sử dụng thực</button>
+            <button class="sv-opt" onclick="vote(2,'c')">C. Kết hợp: một phần giá trị thực + một phần đầu cơ</button>
+            <button class="sv-opt" onclick="vote(2,'d')">D. Do chính sách nhà nước tạo ra</button>
+          </div>
+          <div class="sv-result" id="sv2-res" style="display:none"></div>
+        </div>
+      </div>
+      <div class="badge-box" id="achievementBadge">
+        <div class="bicon">🏆</div>
+        <h4 id="badgeTitle">Huy hiệu "Nhà Kinh Tế Chính Trị Nhí"</h4>
+        <p id="badgeText">Bạn đã hoàn thành cả Quiz và Khảo sát — chứng tỏ bạn hiểu rõ cách giá trị thặng dư được
+          phân chia trong nền kinh tế thị trường!</p>
+      </div>
+      <div style="text-align:center;margin-top:36px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+        <a href="#refs" class="btn btn-outline-dark"><i class="fas fa-book"></i> Xem nguồn tài liệu</a>
+        <a href="#hero" class="btn btn-red"><i class="fas fa-arrow-up"></i> Lên đầu trang</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- REFS -->
+  <section id="refs">
+    <div class="container">
+      <div class="sec-badge badge-teal"><i class="fas fa-book"></i> Tài liệu tham khảo</div>
+      <h2 class="sec-title">Nguồn trích dẫn</h2>
+      <p class="sec-sub">Tất cả số liệu đều từ BCTC chính thức, nghiên cứu thị trường uy tín và văn bản học thuật có thể
+        xác minh.</p>
+      <div class="ref-grid">
+        <div class="ref-card">
+          <div class="ref-n">[1] BCTC DN</div>
+          <div class="ref-t">MWG — Biên LN gộp 2022 đạt ~23.1% (tự tính từ 4 quý); doanh thu 133,405 tỷ</div><a
+            href="https://cafef.vn/du-lieu/bao-cao-tai-chinh/mwg/incsta/2022/4/0/0/ket-qua-hoat-dong-kinh-doanh-cong-ty-co-phan-dau-tu-the-gioi-di-dong.chn"
+            target="_blank"><i class="fas fa-external-link-alt"></i> CafeF — BCTC MWG theo quý 2022</a>
+        </div>
+        <div class="ref-card">
+          <div class="ref-n">[2] BCTC DN</div>
+          <div class="ref-t">FPT Retail 2022 — Doanh thu 30,166 tỷ (tự tính 4 quý); biên LN gộp ~15.6%; lợi nhuận sau
+            thuế 398 tỷ</div><a
+            href="https://cafef.vn/du-lieu/bao-cao-tai-chinh/frt/incsta/2022/4/0/0/ket-qua-hoat-dong-kinh-doanh-cong-ty-co-phan-ban-le-ky-thuat-so-fpt.chn"
+            target="_blank"><i class="fas fa-external-link-alt"></i> CafeF — BCTC FRT theo quý 2022</a>
+        </div>
+        <div class="ref-card">
+          <div class="ref-n">[3] Ngân hàng</div>
+          <div class="ref-t">Techcombank 2023 — LN trước thuế 22,900 tỷ; NIM 4.2% (giảm từ 5.1% năm 2022)</div><a
+            href="https://vnexpress.net/techcombank-cong-bo-ket-qua-kinh-doanh-nam-2023-4704172.html" target="_blank"><i
+              class="fas fa-external-link-alt"></i> VnExpress — TCB KQKD 2023</a>
+        </div>
+        <div class="ref-card">
+          <div class="ref-n">[4] Ngân hàng</div>
+          <div class="ref-t">Vietcombank 2023 — LN trước thuế 41,244 tỷ (lần đầu vượt 40,000 tỷ, cao nhất ngành)</div><a
+            href="https://cafef.vn/loi-nhuan-hon-41000-ty-cua-vietcombank-nam-2023-den-tu-dau-188240131132557341.chn"
+            target="_blank"><i class="fas fa-external-link-alt"></i> CafeF — VCB 41,244 tỷ 2023</a>
+        </div>
+        <div class="ref-card">
+          <div class="ref-n">[5a] Ngân hàng</div>
+          <div class="ref-t">MB Bank 2023 — LN trước thuế hơn 26,300 tỷ đồng</div><a
+            href="https://baodautu.vn/mb-hon-26300-ty-dong-loi-nhuan-truoc-thue-casa-duy-tri-tren-40-d208254.html"
+            target="_blank"><i class="fas fa-external-link-alt"></i> Báo Đầu Tư — MB 2023</a>
+        </div>
+        <div class="ref-card">
+          <div class="ref-n">[5b] Ngân hàng</div>
+          <div class="ref-t">BIDV 2023 — LN trước thuế hợp nhất hơn 27,400 tỷ đồng, tăng 20.6% so 2022</div><a
+            href="https://cafef.vn/bidv-bao-lai-truoc-thue-hon-27400-ty-dong-trong-nam-2023-18824010616440736.chn"
+            target="_blank"><i class="fas fa-external-link-alt"></i> CafeF — BIDV 2023</a>
+        </div>
+        <div class="ref-card">
+          <div class="ref-n">[6] BĐS Research</div>
+          <div class="ref-t">DKRA Vietnam — đất nền Bình Dương H1/2022: bình quân 33.5 tr/m², cao nhất 58 tr/m²; TDM
+            &amp; Dĩ An tăng 30–60% (2020–2021)</div><a
+            href="https://thanhnien.vn/chuyen-dong-moi-tren-thi-truong-dat-nen-binh-duong-1851483548.htm"
+            target="_blank"><i class="fas fa-external-link-alt"></i> Thanh Niên — DKRA giá đất Bình Dương</a>
+        </div>
+        <div class="ref-card">
+          <div class="ref-n">[7] Nhà nước</div>
+          <div class="ref-t">NHNN — 2 đợt tăng lãi suất điều hành 2022: 23/9 (tái cấp vốn 4%→5%) và 25/10 (tái cấp
+            vốn 5%→6%); cộng dồn cả năm tăng 2 điểm %</div><a
+            href="https://tapchinganhang.gov.vn/ngan-hang-nha-nuoc-viet-nam-dieu-chinh-mot-so-muc-lai-suat-tu-ngay-2392022-3059.html"
+            target="_blank"><i class="fas fa-external-link-alt"></i> Tạp chí NH — Đợt 23/9/2022</a>
+          <a href="https://baochinhphu.vn/ngan-hang-nha-nuoc-viet-nam-dieu-chinh-cac-muc-lai-suat-dieu-hanh-102221024210117723.htm"
+            target="_blank"><i class="fas fa-external-link-alt"></i> Báo CP — Đợt 25/10/2022</a>
+        </div>
+        <div class="ref-card">
+          <div class="ref-n">[8] Thống kê</div>
+          <div class="ref-t">GSO — KSMS 2022: Thu nhập BQ Bình Dương 8,076 nghìn đồng/người/tháng, cao nhất cả nước
+          </div><a
+            href="https://cafebiz.vn/giau-co-binh-duong-thu-nhap-binh-quan-cao-nhat-ca-nuoc-bo-xa-ca-ha-noi-va-tp-hcm-gap-4-lan-tinh-thap-nhat-176230506114232935.chn"
+            target="_blank"><i class="fas fa-external-link-alt"></i> CafeBiz — GSO Thu nhập BD</a>
+        </div>
+        <div class="ref-card">
+          <div class="ref-n">[9] Học thuật</div>
+          <div class="ref-t">Karl Marx — Das Kapital (Tư bản luận), bản dịch tiếng Việt — Quyển I công khai trên
+            Internet Archive</div><a href="https://archive.org/details/tu-ban-quyen-1" target="_blank"><i
+              class="fas fa-external-link-alt"></i> archive.org — Tư bản (Quyển I)</a>
+        </div>
+        <div class="ref-card">
+          <div class="ref-n">[10] BĐS Data</div>
+          <div class="ref-t">Batdongsan.com.vn — Giá đất nền thấp nhất tại Bàu Bàng/Phú Giáo/Bến Cát/Tân Uyên đầu
+            2022 (1.2–1.5 tỷ/nền) cao hơn ~15% so cuối 2021</div><a
+            href="https://thanhnien.vn/chuyen-dong-moi-tren-thi-truong-dat-nen-binh-duong-1851483548.htm"
+            target="_blank"><i class="fas fa-external-link-alt"></i> Thanh Niên — dẫn số liệu Batdongsan.com.vn</a>
+        </div>
+        <div class="ref-card">
+          <div class="ref-n">[11] Giáo trình</div>
+          <div class="ref-t">Bộ GD&amp;ĐT — Giáo trình Kinh tế chính trị Mác-Lênin (2021), NXB Chính trị Quốc gia Sự
+            thật — tài liệu chính thức MLN122</div><a
+            href="https://drive.google.com/file/d/1kD4-FWb8MXoen6B_DhxJTahx38bnqibN/view" target="_blank"><i
+              class="fas fa-external-link-alt"></i>Giáo trình Kinh tế chính trị Mác – Lênin</a>
+        </div>
+        <div class="ref-card">
+          <div class="ref-n">[12] Báo cáo</div>
+          <div class="ref-t">Techcombank — Annual Report 2023: NIM, ROE, chiến lược tái cơ cấu danh mục</div><a
+            href="https://techcombank.com/en/investors/annual-report/2023/bank-wide-management-report"
+            target="_blank"><i class="fas fa-external-link-alt"></i> TCB Annual Report 2023</a>
+        </div>
+      </div>
+      <div class="qbox" style="margin-top:28px">
+        <p><i class="fas fa-robot" style="color:var(--gold)"></i> <strong>Phụ lục AI:</strong> Website sử dụng Claude AI
+          (Anthropic) để hỗ trợ cấu trúc &amp; phân tích. Tất cả số liệu được <strong style="color:var(--text)">kiểm
+            chứng</strong> qua BCTC chính thức (HOSE/HNX), báo cáo DKRA/CBRE và văn bản NHNN. Không có số liệu nào do AI
+          tự bịa — mọi dữ liệu đều có nguồn trích dẫn cụ thể và có thể xác minh độc lập.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>MLN122 &mdash; <span class="hl">Nhóm 2</span> &mdash; Slot 4 &mdash; Chương 3: Phân chia GTTD &amp; "Tiền đẻ ra
+      Tiền"</p>
+    <p style="margin-top:6px">Kinh tế Chính trị Mác-Lênin &mdash; <span class="hl">FPT University</span> &mdash; 2025
+    </p>
+  </footer>
+
+  <script>
+    // NAV
+    function toggleNav() { document.getElementById('navLinks').classList.toggle('open') }
+    window.addEventListener('scroll', () => {
+      const ids = ['theory', 'commercial', 'interest', 'landrent', 'money', 'speculation', 'quiz', 'refs'];
+      let cur = ''; ids.forEach(id => { const el = document.getElementById(id); if (el && window.scrollY >= el.offsetTop - 100) cur = id });
+      document.querySelectorAll('.nav-links a').forEach(a => { a.classList.toggle('active', a.getAttribute('href') === '#' + cur) });
+    });
+
+    // FLOATING COINS
+    (() => {
+      const emojis = ['💰', '💵', '🪙', '📈', '💎', '🏦', '🏠', '📊', '💹'];
+      const c = document.getElementById('heroFloat');
+      for (let i = 0; i < 22; i++) {
+        const el = document.createElement('div'); el.className = 'hf-coin';
+        el.textContent = emojis[i % emojis.length];
+        el.style.cssText = `left:${Math.random() * 100}%;animation-duration:${10 + Math.random() * 14}s;animation-delay:${Math.random() * 10}s;font-size:${16 + Math.random() * 18}px`;
+        c.appendChild(el);
+      }
+    })();
+
+    // COUNTER
+    document.querySelectorAll('[data-count]').forEach(el => {
+      new IntersectionObserver(entries => {
+        entries.forEach(e => {
+          if (!e.isIntersecting) return;
+          const target = parseFloat(el.dataset.count), dec = target % 1 !== 0, dur = 1800, start = performance.now();
+          const run = now => { const p = Math.min((now - start) / dur, 1), ease = 1 - Math.pow(1 - p, 3); el.textContent = (dec ? (target * ease).toFixed(1) : Math.floor(target * ease)) + ''; if (p < 1) requestAnimationFrame(run); };
+          requestAnimationFrame(run); e.target.dataset.done = 1;
+        });
+      }, { threshold: .5 }).observe(el);
+    });
+
+    // PROGRESS BARS
+    document.querySelectorAll('.pbar-fill').forEach(b => {
+      new IntersectionObserver(en => { en.forEach(e => { if (e.isIntersecting) { b.style.width = b.dataset.w || '0%' } }) }, { threshold: .3 }).observe(b);
+    });
+
+    // CHARTS - light mode
+    Chart.defaults.color = '#64748B';
+    Chart.defaults.font.family = "'Be Vietnam Pro',sans-serif";
+    const gc = 'rgba(0,0,0,0.07)';
+
+    new Chart(document.getElementById('chartCommercial'), {
+      type: 'bar',
+      data: {
+        labels: ['2020', '2021', '2022', '2023', '2024'], datasets: [
+          { label: 'MWG / Điện Máy Xanh (biên LN gộp %)', data: [22.1, 22.5, 23.1, 19.1, 20.5], backgroundColor: 'rgba(220,38,38,0.75)', borderWidth: 0, borderRadius: 8, borderSkipped: false },
+          { label: 'FPT Retail / FPT Shop (biên LN gộp %)', data: [13.9, 13.8, 15.6, 16.2, 18.9], backgroundColor: 'rgba(67,97,238,0.75)', borderWidth: 0, borderRadius: 8, borderSkipped: false }
+        ]
+      },
+      options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'top', labels: { usePointStyle: true, boxWidth: 10, padding: 16 } }, tooltip: { callbacks: { label: c => ` ${c.dataset.label}: ${c.parsed.y}%` } } }, scales: { x: { grid: { color: gc } }, y: { grid: { color: gc }, ticks: { callback: v => v + '%' }, min: 0, max: 28 } } }
+    });
+
+    new Chart(document.getElementById('chartInterest'), {
+      type: 'line',
+      data: {
+        labels: ['T1/2020', 'T1/2021', 'T1/2022', 'T7/2022', 'T1/2023', 'T7/2023', 'T1/2024'], datasets: [
+          { label: 'Lãi suất cho vay TB', data: [9.5, 9.0, 9.5, 12.5, 11.5, 10.0, 9.0], borderColor: '#DC2626', backgroundColor: 'rgba(220,38,38,0.08)', fill: true, tension: .4, borderWidth: 2.5, pointRadius: 4, pointBackgroundColor: '#DC2626', pointBorderColor: '#fff', pointBorderWidth: 2 },
+          { label: 'Lãi suất tiền gửi (12T)', data: [6.5, 5.8, 6.0, 8.5, 7.5, 5.5, 4.8], borderColor: '#D97706', backgroundColor: 'rgba(245,158,11,0.07)', fill: true, tension: .4, borderWidth: 2.5, pointRadius: 4, pointBackgroundColor: '#F59E0B', pointBorderColor: '#fff', pointBorderWidth: 2 },
+          { label: 'NIM (chênh lệch)', data: [3.0, 3.2, 3.5, 4.0, 4.0, 4.5, 4.2], borderColor: '#0891B2', borderDash: [6, 4], fill: false, tension: .4, borderWidth: 2, pointRadius: 3, pointBackgroundColor: '#0891B2', pointBorderColor: '#fff', pointBorderWidth: 2 }
+        ]
+      },
+      options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'top', labels: { usePointStyle: true, boxWidth: 10, padding: 14 } }, tooltip: { callbacks: { label: c => ` ${c.dataset.label}: ${c.parsed.y}%/năm` } } }, scales: { x: { grid: { color: gc } }, y: { grid: { color: gc }, ticks: { callback: v => v + '%' } } } }
+    });
+
+    new Chart(document.getElementById('chartLand'), {
+      type: 'bar',
+      data: {
+        labels: ['Bình quân H1/2022', 'Cao nhất H1/2022'], datasets: [
+          { label: 'Giá đất nền Bình Dương (tr/m²)', data: [33.5, 58], backgroundColor: ['rgba(220,38,38,0.65)', 'rgba(220,38,38,0.9)'], borderWidth: 0, borderRadius: 8, borderSkipped: false }
+        ]
+      },
+      options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false }, tooltip: { callbacks: { label: c => ` ${c.parsed.y} triệu VND/m²` } } }, scales: { x: { grid: { color: gc } }, y: { grid: { color: gc }, ticks: { callback: v => v + ' tr' }, title: { display: true, text: 'Triệu VND/m²', color: '#64748B' } } } }
+    });
+
+    // CALC
+    const rates = { retail: 3, bank: 15, land: 20, mfg: 8 };
+    function calcProfit() {
+      const cap = parseFloat(document.getElementById('calcCapital').value) || 1000;
+      const sec = document.getElementById('calcSector').value;
+      const yrs = parseInt(document.getElementById('calcYears').value) || 3;
+      const r = rates[sec], y = cap * r / 100, t = y * yrs;
+      document.getElementById('r-capital').textContent = cap.toLocaleString('vi') + ' triệu';
+      document.getElementById('r-rate').textContent = r + '%/năm';
+      document.getElementById('r-yearly').textContent = y.toLocaleString('vi', { maximumFractionDigits: 0 }) + ' triệu';
+      document.getElementById('r-yrlbl').textContent = yrs;
+      document.getElementById('r-total').textContent = t.toLocaleString('vi', { maximumFractionDigits: 0 }) + ' triệu VND';
+    }
+    calcProfit();
+
+    // QUIZ
+    const Qs = [
+      { q: "Theo Marx, lợi nhuận thương nghiệp (pTN) có nguồn gốc từ đâu?", o: ["Thương nhân tạo ra khi thực hiện giao dịch mua bán", "Giá trị thặng dư do công nhân SX tạo ra, được nhà TB công nghiệp chia sẻ", "Chênh lệch tỷ giá và biến động giá thị trường", "Kỹ năng đàm phán và marketing của thương nhân"], c: 1, e: "Nhà TB thương nghiệp không tham gia SX nên không tạo GTTD trực tiếp. Họ mua hàng dưới giá trị từ nhà SX, bán đúng giá trị — phần chênh = GTTD được phân phối lại cho thương nhân." },
+      { q: "MWG (Điện Máy Xanh) biên LN gộp ~23% năm 2022. Điều đó nghĩa là:", o: ["Từ 100đ doanh thu, MWG bỏ túi ròng 23đ", "Giá bán cao hơn giá vốn ~23%, phần chênh là GTTD từ nhà SX nhường lại", "MWG tạo ra 23% giá trị mới thông qua phân phối", "MWG kinh doanh hiệu quả hơn nhờ kỹ năng quản lý"], c: 1, e: "Biên LN gộp 23% = phần chênh giữa giá bán và giá vốn (COGS). Sau chi phí vận hành, LN ròng chỉ vài %  — phần lớn GTTD bị 'nuốt' bởi chi phí lao động, thuê mặt bằng." },
+      { q: "NIM ngân hàng (~4%) thực chất là:", o: ["Tiền NH tự tạo ra từ nghiệp vụ tài chính phức tạp", "Phần GTTD do người đi vay tạo ra từ SX, phải chia lại cho NH", "Phần bù rủi ro tín dụng mà NH được hưởng", "Lợi nhuận từ đầu tư chứng khoán của NH"], c: 1, e: "NIM = Lãi cho vay − Lãi tiền gửi. Ví dụ: cho vay 10%/năm, trả tiền gửi 6%/năm → NIM 4%. Phần 4% này đến từ GTTD mà người vay tạo ra trong hoạt động sản xuất thực tế." },
+      { q: "Công thức tổng quát của tư bản theo Marx là:", o: ["H → T → H' (Hàng → Tiền → Hàng nhiều hơn)", "T → H → T' với T' > T (Tiền → Hàng → Tiền nhiều hơn)", "T → T' (Tiền trực tiếp sinh ra Tiền)", "L → T → L' (Lao động → Tiền → Lao động phức tạp)"], c: 1, e: "T → H → T' là TB công nghiệp: dùng tiền mua TLSX + SLĐ → SX → bán T' > T. Phần T'−T = m (GTTD). T→T' là TB cho vay. H→T→H' là lưu thông hàng hóa giản đơn." },
+      { q: "Đất nền Bình Dương đạt đỉnh bình quân 33.5 tr/m² (cao nhất 58 tr/m²) vào H1/2022, sau khi tăng 30–60% trong 2020–2021. Theo KTCT Mác-Lênin:", o: ["Đất tạo ra thêm giá trị do điều kiện tự nhiên cải thiện", "Chủ yếu là đầu cơ — giá tách khỏi giá trị thực vì đất không tạo GTTD", "Địa tô chênh lệch tăng do hạ tầng phát triển đồng đều", "Cung đất giảm mạnh nên giá tăng"], c: 1, e: "Đất không tạo GTTD. Tăng dựng đứng trong thời gian ngắn khi hạ tầng không cải thiện tương ứng = đầu cơ. Chỉ số giá/thu nhập đạt ~34.5 năm lương (bình quân H1/2022) — vượt xa mọi ngưỡng bình thường quốc tế." },
+      { q: "Khi nói 'tiền đẻ ra tiền' (T→T'), Marx muốn nhấn mạnh:", o: ["Đây là quy luật tự nhiên của kinh tế thị trường", "Đây là ảo giác: GTTD thực sự đến từ lao động công nhân, không phải tiền tự sinh", "Tiền đẻ tiền thông qua đầu cơ và tài chính phức tạp", "Chỉ tiền vốn lớn mới có thể sinh lời"], c: 1, e: "T→T' là ảo giác che giấu: T được đưa vào SX (T→H→T'), công nhân tạo m = T'−T. Không có lao động, tiền không tự sinh được. Techcombank lãi trước thuế 22,900 tỷ — tiền đó từ GTTD của hàng triệu người vay trong SX thực." }
+    ];
+    let curQ = 0, score = 0, answered = false;
+    function renderQ() {
+      const q = Qs[curQ];
+      document.getElementById('qNum').textContent = `CÂU ${curQ + 1} / ${Qs.length}`;
+      document.getElementById('qBar').style.width = (curQ / Qs.length * 100) + '%';
+      document.getElementById('qText').textContent = q.q;
+      const el = document.getElementById('qOpts'); el.innerHTML = '';
+      ['A', 'B', 'C', 'D'].forEach((l, i) => {
+        const b = document.createElement('button'); b.className = 'q-opt';
+        b.innerHTML = `<span class="opt-letter">${l}</span><span>${q.o[i]}</span>`;
+        b.onclick = () => answerQ(i, b); el.appendChild(b);
+      });
+      document.getElementById('qExplain').style.display = 'none';
+      document.getElementById('qNext').style.display = 'none';
+      answered = false;
+    }
+    function answerQ(i, btn) {
+      if (answered) return; answered = true;
+      const q = Qs[curQ]; document.querySelectorAll('.q-opt').forEach(b => b.disabled = true);
+      if (i === q.c) { btn.classList.add('correct'); score++; }
+      else { btn.classList.add('wrong'); document.querySelectorAll('.q-opt')[q.c].classList.add('correct'); }
+      const exp = document.getElementById('qExplain'); exp.textContent = '💡 ' + q.e; exp.style.display = 'block';
+      document.getElementById('qNext').style.display = 'flex';
+    }
+    function nextQ() { curQ++; if (curQ >= Qs.length) { showScore(); return; } renderQ(); }
+    function showScore() {
+      sessionStorage.setItem('quiz_score', score);
+      document.getElementById('qBar').style.width = '100%';
+      document.getElementById('qGame').style.display = 'none';
+      document.getElementById('qScore').style.display = 'block';
+      document.getElementById('scN').textContent = score + '/' + Qs.length;
+      const msgs = [['Hãy ôn lại lý thuyết nhé! 📚', 'Đọc kỹ phần lý luận và thử lại.'], ['Khá tốt! 💪', 'Bạn nắm được những điểm cơ bản.'], ['Tốt lắm! 👍', 'Hiểu khá vững về KTCT Mác-Lênin.'], ['Xuất sắc! 🎉', 'Bạn nắm rất chắc nội dung chương 3!']];
+      const idx = score <= 1 ? 0 : score <= 3 ? 1 : score <= 5 ? 2 : 3;
+      document.getElementById('scMsg').textContent = msgs[idx][0];
+      document.getElementById('scSub').textContent = msgs[idx][1];
+      checkBadge();
+    }
+    function resetQ() { curQ = 0; score = 0; document.getElementById('qGame').style.display = 'block'; document.getElementById('qScore').style.display = 'none'; renderQ(); }
+    renderQ();
+
+    // SURVEY
+    const svData = { 1: { a: 12, b: 58, c: 20, d: 10, labels: ['Quy luật tự nhiên', 'GTTD từ lao động', 'Biến động thị trường', 'Chưa rõ'] }, 2: { a: 5, b: 42, c: 45, d: 8, labels: ['Giá trị thực', 'Đầu cơ thuần túy', 'Kết hợp cả hai', 'Do chính sách'] } };
+    const voted = {};
+    function vote(n, o) {
+      if (voted[n]) return; voted[n] = o; sessionStorage.setItem('sv' + n, o);
+      const d = svData[n]; d[o]++;
+      const total = Object.keys(d).filter(k => k.length === 1).reduce((s, k) => s + d[k], 0);
+      document.getElementById('sv' + n).style.display = 'none';
+      const res = document.getElementById('sv' + n + '-res'); res.style.display = 'block';
+      res.innerHTML = '<div style="font-size:12px;color:var(--muted);margin-bottom:12px">' + total + ' phản hồi:</div>' +
+        ['a', 'b', 'c', 'd'].map((opt, i) => {
+          const pct = Math.round(d[opt] / total * 100); const isU = opt === o;
+          return `<div class="sv-bar-row"><div class="sv-bar-labels"><span ${isU ? 'style="color:var(--gold);font-weight:700"' : ''}>${d.labels[i]}${isU ? ' ✓' : ''}</span><span>${pct}%</span></div><div class="sv-bar-track"><div class="sv-bar-fill" style="width:0%" data-w="${pct}%"></div></div></div>`;
+        }).join('');
+      setTimeout(() => res.querySelectorAll('.sv-bar-fill').forEach(el => { el.style.width = el.dataset.w }), 80);
+      checkBadge();
+    }
+    ['1', '2'].forEach(n => { const v = sessionStorage.getItem('sv' + n); if (v) vote(parseInt(n), v); });
+
+    // === TƯƠNG TÁC NÂNG CAO ===
+
+    // 1) SLIDER GIÁ VỐN / GIÁ BÁN TIVI
+    const TV_COST = 14000000;
+    function updateTvMarkup() {
+      const pct = parseFloat(document.getElementById('tvMarkup').value);
+      const diff = TV_COST * pct / 100;
+      const sell = TV_COST + diff;
+      const costShare = 100 / (100 + pct) * 100;
+      const marginShare = 100 - costShare;
+      document.getElementById('tvCostBar').style.flex = costShare;
+      document.getElementById('tvMarginBar').style.flex = marginShare;
+      document.getElementById('tvCostBar').textContent = 'Giá vốn từ nhà phân phối: ~' + TV_COST.toLocaleString('vi') + '₫';
+      document.getElementById('tvMarginBar').textContent = 'GTTD ~' + pct + '%';
+      document.getElementById('tvSellLabel').textContent = 'Giá bán lẻ: ~' + Math.round(sell).toLocaleString('vi') + '₫';
+      document.getElementById('tvMarkupVal').textContent = pct + '%';
+      document.getElementById('tvDiffLabel').textContent = '~' + (diff / 1000000).toLocaleString('vi', { maximumFractionDigits: 1 }) + ' triệu';
+    }
+    document.getElementById('tvCostBar') && (() => {
+      document.getElementById('tvCostBar').style.flex = '7.5';
+      document.getElementById('tvMarginBar').style.flex = '2.5';
+      updateTvMarkup();
+    })();
+
+    // 2) CLICK-TO-REVEAL SƠ ĐỒ T→H→T'
+    const flowDetails = {
+      factory: { icon: '🏭', title: 'Nhà máy sản xuất — nơi sinh ra GTTD', text: 'Công nhân dùng sức lao động (SLĐ) kết hợp tư liệu sản xuất (TLSX) để tạo ra hàng hóa có giá trị lớn hơn giá trị SLĐ mà họ được trả (tiền lương). Phần chênh lệch đó chính là <strong>giá trị thặng dư (m)</strong> — nguồn gốc duy nhất của mọi lợi nhuận trong nền kinh tế TBCN.' },
+      m: { icon: '💰', title: 'Giá trị thặng dư (m) — công thức T→H→T\'', text: 'Nhà tư bản ứng trước T (tiền) để mua H (TLSX + SLĐ), tổ chức sản xuất, rồi bán ra thu về T\' lớn hơn T. Khoản chênh lệch <strong>m = T′ − T</strong> chính là GTTD. Đây là điểm khởi đầu trước khi m được phân chia cho 3 nhóm nhà tư bản khác nhau.' },
+      pTN: { icon: '🛒', title: 'Lợi nhuận thương nghiệp (p_TN)', text: 'Nhà tư bản công nghiệp "nhường" một phần m cho nhà tư bản thương nghiệp (như Điện Máy Xanh, FPT Shop) để họ đảm nhận khâu lưu thông — mua đúng giá trị thấp hơn từ nhà sản xuất, bán đúng giá trị ra thị trường. Thương nhân <strong>không tạo ra GTTD</strong>, chỉ nhận lại một phần đã có sẵn.' },
+      z: { icon: '🏦', title: 'Lợi tức tín dụng (z)', text: 'Khi vay vốn để sản xuất, người vay dùng tiền đó tạo ra GTTD rồi trích một phần trả lãi (z) cho ngân hàng/chủ nợ. Ngân hàng không tham gia sản xuất nên <strong>z chính là phần GTTD được chia lại</strong> cho tư bản cho vay — không phải "tiền tự đẻ ra tiền".' },
+      R: { icon: '🏘️', title: 'Địa tô tư bản chủ nghĩa (R)', text: 'Doanh nghiệp thuê đất kinh doanh phải trả địa tô (R) cho địa chủ. Gồm <strong>địa tô tuyệt đối</strong> (mọi mảnh đất đều có vì là tài nguyên khan hiếm, sở hữu tư nhân) và <strong>địa tô chênh lệch</strong> (đất tốt hơn — gần KCN, hạ tầng — thu R cao hơn).' }
+    };
+    function showFlowDetail(key) {
+      const panel = document.getElementById('flowDetail');
+      const inner = document.getElementById('flowDetailInner');
+      const d = flowDetails[key];
+      document.querySelectorAll('.tf-box, .tf-split-item').forEach(el => el.classList.remove('active'));
+      const activeEl = document.getElementById('tfBox-' + key);
+      const alreadyOpen = panel.classList.contains('open') && activeEl && activeEl.classList.contains('was-active');
+      document.querySelectorAll('.tf-box, .tf-split-item').forEach(el => el.classList.remove('was-active'));
+      if (panel.dataset.current === key && panel.classList.contains('open')) {
+        panel.classList.remove('open'); panel.dataset.current = ''; return;
+      }
+      if (activeEl) { activeEl.classList.add('active'); activeEl.classList.add('was-active'); }
+      inner.innerHTML = `<h4>${d.icon} ${d.title}</h4><p>${d.text}</p>`;
+      panel.classList.add('open');
+      panel.dataset.current = key;
+    }
+
+    // 3) CALCULATOR VAY NGÂN HÀNG
+    function calcLoan() {
+      const amt = parseFloat(document.getElementById('loanAmount').value) || 0;
+      const rLoan = parseFloat(document.getElementById('loanRate').value) || 0;
+      const rDep = parseFloat(document.getElementById('depositRate').value) || 0;
+      const interest = amt * rLoan / 100;
+      const depositPay = amt * Math.min(rDep, rLoan) / 100;
+      const nim = Math.max(interest - depositPay, 0);
+      const fmt = v => v.toLocaleString('vi', { maximumFractionDigits: 1 }) + ' tr';
+      document.getElementById('loanInterestTotal').textContent = fmt(interest);
+      document.getElementById('loanNim').textContent = fmt(nim);
+      document.getElementById('loanDepositPay').textContent = fmt(depositPay);
+    }
+    document.getElementById('loanAmount') && calcLoan();
+
+    // 4) SLIDER TRƯỚC/SAU GIÁ ĐẤT
+    function updateCompare() {
+      const v = document.getElementById('compareRange').value;
+      document.getElementById('comparePanelAfter').style.clipPath = `inset(0 0 0 ${v}%)`;
+      document.getElementById('compareDivider').style.left = v + '%';
+    }
+    document.getElementById('compareRange') && updateCompare();
+
+    // 5) TIMELINE SCROLL REVEAL
+    document.querySelectorAll('.tl-item').forEach(item => {
+      new IntersectionObserver((entries, obs) => {
+        entries.forEach(e => {
+          if (e.isIntersecting) {
+            item.classList.add('tl-visible');
+            const fill = item.querySelector('.tl-bar-fill');
+            if (fill) fill.style.width = fill.dataset.w;
+            obs.disconnect();
+          }
+        });
+      }, { threshold: .3 }).observe(item);
+    });
+
+    // 6) EXPLORE TRACKER WIDGET
+    const exploreSections = [
+      { id: 'theory', label: 'Lý luận GTTD' },
+      { id: 'commercial', label: 'Lợi nhuận thương nghiệp' },
+      { id: 'interest', label: 'Lợi tức tín dụng' },
+      { id: 'landrent', label: 'Địa tô TBCN' },
+      { id: 'money', label: 'Tiền đẻ ra tiền' },
+      { id: 'speculation', label: 'Sốt đất' }
+    ];
+    const exploredSet = new Set(JSON.parse(sessionStorage.getItem('explored') || '[]'));
+    function renderTracker() {
+      const n = exploredSet.size, total = exploreSections.length;
+      const pct = (n / total) * 100;
+      document.getElementById('etRingFill').setAttribute('stroke-dasharray', pct + ',100');
+      document.getElementById('etText').innerHTML = n + '/' + total + '<small>Đã khám phá</small>';
+      document.getElementById('etPanel').innerHTML = exploreSections.map(s =>
+        `<div class="et-item ${exploredSet.has(s.id) ? 'done' : ''}"><i class="fas ${exploredSet.has(s.id) ? 'fa-check-circle' : 'fa-circle'}"></i> ${s.label}</div>`
+      ).join('');
+    }
+    exploreSections.forEach(s => {
+      const el = document.getElementById(s.id);
+      if (!el) return;
+      new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+          if (e.isIntersecting && !exploredSet.has(s.id)) {
+            exploredSet.add(s.id);
+            sessionStorage.setItem('explored', JSON.stringify([...exploredSet]));
+            renderTracker();
+          }
+        });
+      }, { threshold: .35 }).observe(el);
+    });
+    renderTracker();
+
+    // 7) BADGE HOÀN THÀNH QUIZ + SURVEY
+    function checkBadge() {
+      const hasQuiz = sessionStorage.getItem('quiz_score') !== null;
+      const hasSv1 = sessionStorage.getItem('sv1') !== null;
+      const hasSv2 = sessionStorage.getItem('sv2') !== null;
+      if (hasQuiz && hasSv1 && hasSv2) {
+        const badge = document.getElementById('achievementBadge');
+        if (!badge.classList.contains('show')) {
+          badge.classList.add('show');
+          const score = sessionStorage.getItem('quiz_score');
+          document.getElementById('badgeText').textContent = `Bạn đã hoàn thành Quiz (${score}/${Qs.length} điểm) và cả 2 câu khảo sát — chứng tỏ bạn hiểu rõ cách giá trị thặng dư được phân chia trong nền kinh tế thị trường!`;
+          badge.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      }
+    }
+    checkBadge();
+  </script>
+</body>
+
+</html>
