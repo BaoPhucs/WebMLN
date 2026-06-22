@@ -1920,7 +1920,7 @@
       <div class="nav-logo">MLN122 — Nhóm 2</div>
       <div class="nav-links" id="navLinks">
         <a href="#theory">Lý luận</a><a href="#commercial">Thương nghiệp</a><a href="#interest">Lợi tức</a><a
-          href="#landrent">Địa tô</a><a href="#money">Tiền đẻ tiền</a><a href="#speculation">Sốt đất</a><a
+          href="#landrent">Địa tô</a><a href="#speculation">Sốt đất</a><a href="#money">Tiền đẻ tiền</a><a
           href="#quiz">Quiz</a><a href="#refs">Nguồn</a>
       </div>
       <button class="nav-ham" onclick="toggleNav()"><i class="fas fa-bars"></i></button>
@@ -2539,6 +2539,81 @@
     </div>
   </section>
 
+  <!-- SPECULATION -->
+  <section id="speculation" class="sec-warm">
+    <div class="container">
+      <div class="sec-badge badge-red"><i class="fas fa-fire"></i> Phân tích thời sự</div>
+      <h2 class="sec-title">Sốt đất: Đầu cơ hay Giá trị?</h2>
+      <p class="sec-sub">Đất không tự tạo ra giá trị. Giá tăng dựng đứng khi hạ tầng không thay đổi tương ứng = <strong
+          style="color:var(--red)">đầu cơ, không phải địa tô thực</strong>.</p>
+
+      <div class="card" style="margin-bottom:28px">
+        <h3 style="font-size:15px;font-weight:800;margin-bottom:6px"><i class="fas fa-home"
+            style="color:var(--red)"></i> Chỉ số khả năng chi trả — Số năm lương để mua 100m² đất (Bình Dương, H1/2022)
+        </h3>
+        <div style="font-size:12px;color:var(--muted);margin-bottom:20px">Thu nhập BQ Bình Dương: <strong>8,076 nghìn
+            đồng/người/tháng = ~97 tr/năm</strong> (GSO — KSMS 2022, cao nhất cả nước) | Bình thường &lt;10 | Cảnh báo
+          10–25 | Bong bóng &gt;25</div>
+        <div class="afford-visual" style="grid-template-columns:repeat(2,1fr)">
+          <div class="afford-year" style="border-color:rgba(245,158,11,0.3);background:#FFFBEB">
+            <div class="yr">Bình quân H1/2022</div>
+            <div class="yrs" style="color:var(--gold)">34.5</div>
+            <div class="abar" style="background:var(--gold2);width:58%"></div><span class="tag tag-warn">Bong
+              bóng</span>
+          </div>
+          <div class="afford-year" style="border-color:rgba(220,38,38,0.3);background:#FEF2F2">
+            <div class="yr" style="color:var(--red)">Cao nhất H1/2022 🔴</div>
+            <div class="yrs" style="color:var(--red)">59.8</div>
+            <div class="abar" style="background:var(--red);width:100%"></div><span class="tag tag-danger">Bong bóng
+              nặng</span>
+          </div>
+        </div>
+        <div
+          style="font-size:11.5px;color:var(--muted);margin-top:8px;padding:8px 12px;background:#FEF9EC;border-radius:8px;border-left:3px solid var(--gold)">
+          Tính theo: Giá đất × 100m² ÷ Thu nhập BQ/năm. VD bình quân: 33.5 tr/m² × 100m² = 3.35 tỷ ÷ 97 tr/năm ≈
+          <strong>34.5 năm</strong>; cao nhất: 58 tr/m² × 100m² = 5.8 tỷ ÷ 97 tr/năm ≈ <strong>59.8 năm</strong>
+        </div>
+        <a href="https://cafebiz.vn/giau-co-binh-duong-thu-nhap-binh-quan-cao-nhat-ca-nuoc-bo-xa-ca-ha-noi-va-tp-hcm-gap-4-lan-tinh-thap-nhat-176230506114232935.chn"
+          target="_blank" class="src-chip"><i class="fas fa-external-link-alt"></i> CafeBiz — GSO: Thu nhập BD 8,076
+          tr/tháng</a>
+        <a href="https://thanhnien.vn/chuyen-dong-moi-tren-thi-truong-dat-nen-binh-duong-1851483548.htm" target="_blank"
+          class="src-chip"><i class="fas fa-external-link-alt"></i> Thanh Niên — DKRA giá đất Bình Dương H1/2022</a>
+      </div>
+
+      <div class="spec-grid">
+        <div class="spec-card red">
+          <h4><i class="fas fa-exclamation-triangle" style="color:var(--red)"></i> Chỉ số Giá/Thu nhập</h4>
+          <p>H1/2022: bình quân 33.5 tr/m² × 100m² = <strong style="color:var(--text)">3.35 tỷ</strong>. Thu nhập BQ
+            Bình Dương: <strong>~97 tr/năm</strong> (GSO 2022: 8,076 nghìn/tháng). Cần <strong
+              style="color:var(--red)">~34.5 năm lương</strong> (không tiêu gì) — vượt xa ngưỡng bong bóng quốc tế
+            (~10–15 năm).</p>
+        </div>
+        <div class="spec-card amber">
+          <h4><i class="fas fa-clock" style="color:var(--gold2)"></i> Đất không tạo GTTD</h4>
+          <p>Đất nền không có công trình = không cho thuê = <strong style="color:var(--text)">không tạo giá trị thặng
+              dư</strong>. Người mua kỳ vọng bán lại cao hơn — đây là đầu cơ thuần túy.</p>
+        </div>
+        <div class="spec-card amber">
+          <h4><i class="fas fa-users" style="color:var(--gold2)"></i> Đòn bẩy &amp; FOMO</h4>
+          <p>2020–2022: Hàng nghìn nhà đầu tư vay NH 60–70% để mua đất vùng ven. Khi lãi tăng (2022), buộc bán cắt lỗ —
+            thanh khoản đóng băng 2023.</p>
+        </div>
+        <div class="spec-card green">
+          <h4><i class="fas fa-check-circle" style="color:var(--green)"></i> Địa tô thực vs Đầu cơ</h4>
+          <p>Đất có KCN hoạt động → <strong style="color:var(--green)">địa tô thực</strong>. Đất bỏ hoang chờ "lên quận"
+            → <strong style="color:var(--red)">đầu cơ</strong> — không có cơ sở GTTD nào cả.</p>
+        </div>
+      </div>
+      <div class="qbox" style="margin-top:24px">
+        <p>"Địa tô không phải là sản phẩm của đất đai mà là sản phẩm của lao động xã hội. Đất đai không tạo ra bất kỳ
+          giá trị nào; chỉ khi kết hợp với lao động mới có giá trị."</p>
+        <div class="cite">— K. Marx, <em>Tư bản luận</em> Quyển III, Ch.37 (bản dịch Quyển I tham khảo tại archive.org)
+          | <a href="https://archive.org/details/tu-ban-quyen-1" target="_blank" style="color:var(--teal)">archive.org —
+            Tư bản (Quyển I)</a></div>
+      </div>
+    </div>
+  </section>
+
   <!-- MONEY BEGETS MONEY -->
   <section id="money">
     <div class="container">
@@ -2625,81 +2700,6 @@
           <p style="font-size:11px;color:var(--muted);margin-top:10px;line-height:1.5">* Mô phỏng đơn giản để minh họa
             nguyên lý KTCT.</p>
         </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- SPECULATION -->
-  <section id="speculation" class="sec-warm">
-    <div class="container">
-      <div class="sec-badge badge-red"><i class="fas fa-fire"></i> Phân tích thời sự</div>
-      <h2 class="sec-title">Sốt đất: Đầu cơ hay Giá trị?</h2>
-      <p class="sec-sub">Đất không tự tạo ra giá trị. Giá tăng dựng đứng khi hạ tầng không thay đổi tương ứng = <strong
-          style="color:var(--red)">đầu cơ, không phải địa tô thực</strong>.</p>
-
-      <div class="card" style="margin-bottom:28px">
-        <h3 style="font-size:15px;font-weight:800;margin-bottom:6px"><i class="fas fa-home"
-            style="color:var(--red)"></i> Chỉ số khả năng chi trả — Số năm lương để mua 100m² đất (Bình Dương, H1/2022)
-        </h3>
-        <div style="font-size:12px;color:var(--muted);margin-bottom:20px">Thu nhập BQ Bình Dương: <strong>8,076 nghìn
-            đồng/người/tháng = ~97 tr/năm</strong> (GSO — KSMS 2022, cao nhất cả nước) | Bình thường &lt;10 | Cảnh báo
-          10–25 | Bong bóng &gt;25</div>
-        <div class="afford-visual" style="grid-template-columns:repeat(2,1fr)">
-          <div class="afford-year" style="border-color:rgba(245,158,11,0.3);background:#FFFBEB">
-            <div class="yr">Bình quân H1/2022</div>
-            <div class="yrs" style="color:var(--gold)">34.5</div>
-            <div class="abar" style="background:var(--gold2);width:58%"></div><span class="tag tag-warn">Bong
-              bóng</span>
-          </div>
-          <div class="afford-year" style="border-color:rgba(220,38,38,0.3);background:#FEF2F2">
-            <div class="yr" style="color:var(--red)">Cao nhất H1/2022 🔴</div>
-            <div class="yrs" style="color:var(--red)">59.8</div>
-            <div class="abar" style="background:var(--red);width:100%"></div><span class="tag tag-danger">Bong bóng
-              nặng</span>
-          </div>
-        </div>
-        <div
-          style="font-size:11.5px;color:var(--muted);margin-top:8px;padding:8px 12px;background:#FEF9EC;border-radius:8px;border-left:3px solid var(--gold)">
-          Tính theo: Giá đất × 100m² ÷ Thu nhập BQ/năm. VD bình quân: 33.5 tr/m² × 100m² = 3.35 tỷ ÷ 97 tr/năm ≈
-          <strong>34.5 năm</strong>; cao nhất: 58 tr/m² × 100m² = 5.8 tỷ ÷ 97 tr/năm ≈ <strong>59.8 năm</strong>
-        </div>
-        <a href="https://cafebiz.vn/giau-co-binh-duong-thu-nhap-binh-quan-cao-nhat-ca-nuoc-bo-xa-ca-ha-noi-va-tp-hcm-gap-4-lan-tinh-thap-nhat-176230506114232935.chn"
-          target="_blank" class="src-chip"><i class="fas fa-external-link-alt"></i> CafeBiz — GSO: Thu nhập BD 8,076
-          tr/tháng</a>
-        <a href="https://thanhnien.vn/chuyen-dong-moi-tren-thi-truong-dat-nen-binh-duong-1851483548.htm" target="_blank"
-          class="src-chip"><i class="fas fa-external-link-alt"></i> Thanh Niên — DKRA giá đất Bình Dương H1/2022</a>
-      </div>
-
-      <div class="spec-grid">
-        <div class="spec-card red">
-          <h4><i class="fas fa-exclamation-triangle" style="color:var(--red)"></i> Chỉ số Giá/Thu nhập</h4>
-          <p>H1/2022: bình quân 33.5 tr/m² × 100m² = <strong style="color:var(--text)">3.35 tỷ</strong>. Thu nhập BQ
-            Bình Dương: <strong>~97 tr/năm</strong> (GSO 2022: 8,076 nghìn/tháng). Cần <strong
-              style="color:var(--red)">~34.5 năm lương</strong> (không tiêu gì) — vượt xa ngưỡng bong bóng quốc tế
-            (~10–15 năm).</p>
-        </div>
-        <div class="spec-card amber">
-          <h4><i class="fas fa-clock" style="color:var(--gold2)"></i> Đất không tạo GTTD</h4>
-          <p>Đất nền không có công trình = không cho thuê = <strong style="color:var(--text)">không tạo giá trị thặng
-              dư</strong>. Người mua kỳ vọng bán lại cao hơn — đây là đầu cơ thuần túy.</p>
-        </div>
-        <div class="spec-card amber">
-          <h4><i class="fas fa-users" style="color:var(--gold2)"></i> Đòn bẩy &amp; FOMO</h4>
-          <p>2020–2022: Hàng nghìn nhà đầu tư vay NH 60–70% để mua đất vùng ven. Khi lãi tăng (2022), buộc bán cắt lỗ —
-            thanh khoản đóng băng 2023.</p>
-        </div>
-        <div class="spec-card green">
-          <h4><i class="fas fa-check-circle" style="color:var(--green)"></i> Địa tô thực vs Đầu cơ</h4>
-          <p>Đất có KCN hoạt động → <strong style="color:var(--green)">địa tô thực</strong>. Đất bỏ hoang chờ "lên quận"
-            → <strong style="color:var(--red)">đầu cơ</strong> — không có cơ sở GTTD nào cả.</p>
-        </div>
-      </div>
-      <div class="qbox" style="margin-top:24px">
-        <p>"Địa tô không phải là sản phẩm của đất đai mà là sản phẩm của lao động xã hội. Đất đai không tạo ra bất kỳ
-          giá trị nào; chỉ khi kết hợp với lao động mới có giá trị."</p>
-        <div class="cite">— K. Marx, <em>Tư bản luận</em> Quyển III, Ch.37 (bản dịch Quyển I tham khảo tại archive.org)
-          | <a href="https://archive.org/details/tu-ban-quyen-1" target="_blank" style="color:var(--teal)">archive.org —
-            Tư bản (Quyển I)</a></div>
       </div>
     </div>
   </section>
@@ -2891,7 +2891,7 @@
     // NAV
     function toggleNav() { document.getElementById('navLinks').classList.toggle('open') }
     window.addEventListener('scroll', () => {
-      const ids = ['theory', 'commercial', 'interest', 'landrent', 'money', 'speculation', 'quiz', 'refs'];
+      const ids = ['theory', 'commercial', 'interest', 'landrent', 'speculation', 'money', 'quiz', 'refs'];
       let cur = ''; ids.forEach(id => { const el = document.getElementById(id); if (el && window.scrollY >= el.offsetTop - 100) cur = id });
       document.querySelectorAll('.nav-links a').forEach(a => { a.classList.toggle('active', a.getAttribute('href') === '#' + cur) });
     });
@@ -2980,12 +2980,12 @@
 
     // QUIZ
     const Qs = [
-      { q: "Theo Marx, lợi nhuận thương nghiệp (pTN) có nguồn gốc từ đâu?", o: ["Thương nhân tạo ra khi thực hiện giao dịch mua bán", "Giá trị thặng dư do công nhân SX tạo ra, được nhà TB công nghiệp chia sẻ", "Chênh lệch tỷ giá và biến động giá thị trường", "Kỹ năng đàm phán và marketing của thương nhân"], c: 1, e: "Nhà TB thương nghiệp không tham gia SX nên không tạo GTTD trực tiếp. Họ mua hàng dưới giá trị từ nhà SX, bán đúng giá trị — phần chênh = GTTD được phân phối lại cho thương nhân." },
-      { q: "MWG (Điện Máy Xanh) biên LN gộp ~23% năm 2022. Điều đó nghĩa là:", o: ["Từ 100đ doanh thu, MWG bỏ túi ròng 23đ", "Giá bán cao hơn giá vốn ~23%, phần chênh là GTTD từ nhà SX nhường lại", "MWG tạo ra 23% giá trị mới thông qua phân phối", "MWG kinh doanh hiệu quả hơn nhờ kỹ năng quản lý"], c: 1, e: "Biên LN gộp 23% = phần chênh giữa giá bán và giá vốn (COGS). Sau chi phí vận hành, LN ròng chỉ vài %  — phần lớn GTTD bị 'nuốt' bởi chi phí lao động, thuê mặt bằng." },
-      { q: "NIM ngân hàng (~4%) thực chất là:", o: ["Tiền NH tự tạo ra từ nghiệp vụ tài chính phức tạp", "Phần GTTD do người đi vay tạo ra từ SX, phải chia lại cho NH", "Phần bù rủi ro tín dụng mà NH được hưởng", "Lợi nhuận từ đầu tư chứng khoán của NH"], c: 1, e: "NIM = Lãi cho vay − Lãi tiền gửi. Ví dụ: cho vay 10%/năm, trả tiền gửi 6%/năm → NIM 4%. Phần 4% này đến từ GTTD mà người vay tạo ra trong hoạt động sản xuất thực tế." },
+      { q: "Theo Marx, lợi nhuận thương nghiệp (pTN) có nguồn gốc từ đâu?", o: ["Thương nhân tạo ra khi thực hiện giao dịch mua bán", "Chênh lệch tỷ giá và biến động giá thị trường", "Giá trị thặng dư do công nhân SX tạo ra, được nhà TB công nghiệp chia sẻ", "Kỹ năng đàm phán và marketing của thương nhân"], c: 2, e: "Nhà TB thương nghiệp không tham gia SX nên không tạo GTTD trực tiếp. Họ mua hàng dưới giá trị từ nhà SX, bán đúng giá trị — phần chênh = GTTD được phân phối lại cho thương nhân." },
+      { q: "MWG (Điện Máy Xanh) biên LN gộp ~23% năm 2022. Điều đó nghĩa là:", o: ["Giá bán cao hơn giá vốn ~23%, phần chênh là GTTD từ nhà SX nhường lại", "Từ 100đ doanh thu, MWG bỏ túi ròng 23đ", "MWG tạo ra 23% giá trị mới thông qua phân phối", "MWG kinh doanh hiệu quả hơn nhờ kỹ năng quản lý"], c: 0, e: "Biên LN gộp 23% = phần chênh giữa giá bán và giá vốn (COGS). Sau chi phí vận hành, LN ròng chỉ vài %  — phần lớn GTTD bị 'nuốt' bởi chi phí lao động, thuê mặt bằng." },
+      { q: "NIM ngân hàng (~4%) thực chất là:", o: ["Tiền NH tự tạo ra từ nghiệp vụ tài chính phức tạp", "Phần bù rủi ro tín dụng mà NH được hưởng", "Lợi nhuận từ đầu tư chứng khoán của NH", "Phần GTTD do người đi vay tạo ra từ SX, phải chia lại cho NH"], c: 3, e: "NIM = Lãi cho vay − Lãi tiền gửi. Ví dụ: cho vay 10%/năm, trả tiền gửi 6%/năm → NIM 4%. Phần 4% này đến từ GTTD mà người vay tạo ra trong hoạt động sản xuất thực tế." },
       { q: "Công thức tổng quát của tư bản theo Marx là:", o: ["H → T → H' (Hàng → Tiền → Hàng nhiều hơn)", "T → H → T' với T' > T (Tiền → Hàng → Tiền nhiều hơn)", "T → T' (Tiền trực tiếp sinh ra Tiền)", "L → T → L' (Lao động → Tiền → Lao động phức tạp)"], c: 1, e: "T → H → T' là TB công nghiệp: dùng tiền mua TLSX + SLĐ → SX → bán T' > T. Phần T'−T = m (GTTD). T→T' là TB cho vay. H→T→H' là lưu thông hàng hóa giản đơn." },
-      { q: "Đất nền Bình Dương đạt đỉnh bình quân 33.5 tr/m² (cao nhất 58 tr/m²) vào H1/2022, sau khi tăng 30–60% trong 2020–2021. Theo KTCT Mác-Lênin:", o: ["Đất tạo ra thêm giá trị do điều kiện tự nhiên cải thiện", "Chủ yếu là đầu cơ — giá tách khỏi giá trị thực vì đất không tạo GTTD", "Địa tô chênh lệch tăng do hạ tầng phát triển đồng đều", "Cung đất giảm mạnh nên giá tăng"], c: 1, e: "Đất không tạo GTTD. Tăng dựng đứng trong thời gian ngắn khi hạ tầng không cải thiện tương ứng = đầu cơ. Chỉ số giá/thu nhập đạt ~34.5 năm lương (bình quân H1/2022) — vượt xa mọi ngưỡng bình thường quốc tế." },
-      { q: "Khi nói 'tiền đẻ ra tiền' (T→T'), Marx muốn nhấn mạnh:", o: ["Đây là quy luật tự nhiên của kinh tế thị trường", "Đây là ảo giác: GTTD thực sự đến từ lao động công nhân, không phải tiền tự sinh", "Tiền đẻ tiền thông qua đầu cơ và tài chính phức tạp", "Chỉ tiền vốn lớn mới có thể sinh lời"], c: 1, e: "T→T' là ảo giác che giấu: T được đưa vào SX (T→H→T'), công nhân tạo m = T'−T. Không có lao động, tiền không tự sinh được. Techcombank lãi trước thuế 22,900 tỷ — tiền đó từ GTTD của hàng triệu người vay trong SX thực." }
+      { q: "Đất nền Bình Dương đạt đỉnh bình quân 33.5 tr/m² (cao nhất 58 tr/m²) vào H1/2022, sau khi tăng 30–60% trong 2020–2021. Theo KTCT Mác-Lênin:", o: ["Chủ yếu là đầu cơ — giá tách khỏi giá trị thực vì đất không tạo GTTD", "Đất tạo ra thêm giá trị do điều kiện tự nhiên cải thiện", "Địa tô chênh lệch tăng do hạ tầng phát triển đồng đều", "Cung đất giảm mạnh nên giá tăng"], c: 0, e: "Đất không tạo GTTD. Tăng dựng đứng trong thời gian ngắn khi hạ tầng không cải thiện tương ứng = đầu cơ. Chỉ số giá/thu nhập đạt ~34.5 năm lương (bình quân H1/2022) — vượt xa mọi ngưỡng bình thường quốc tế." },
+      { q: "Khi nói 'tiền đẻ ra tiền' (T→T'), Marx muốn nhấn mạnh:", o: ["Đây là quy luật tự nhiên của kinh tế thị trường", "Chỉ tiền vốn lớn mới có thể sinh lời", "Đây là ảo giác: GTTD thực sự đến từ lao động công nhân, không phải tiền tự sinh", "Tiền đẻ tiền thông qua đầu cơ và tài chính phức tạp"], c: 2, e: "T→T' là ảo giác che giấu: T được đưa vào SX (T→H→T'), công nhân tạo m = T'−T. Không có lao động, tiền không tự sinh được. Techcombank lãi trước thuế 22,900 tỷ — tiền đó từ GTTD của hàng triệu người vay trong SX thực." }
     ];
     let curQ = 0, score = 0, answered = false;
     function renderQ() {
@@ -3138,8 +3138,8 @@
       { id: 'commercial', label: 'Lợi nhuận thương nghiệp' },
       { id: 'interest', label: 'Lợi tức tín dụng' },
       { id: 'landrent', label: 'Địa tô TBCN' },
-      { id: 'money', label: 'Tiền đẻ ra tiền' },
-      { id: 'speculation', label: 'Sốt đất' }
+      { id: 'speculation', label: 'Sốt đất' },
+      { id: 'money', label: 'Tiền đẻ ra tiền' }
     ];
     const exploredSet = new Set(JSON.parse(sessionStorage.getItem('explored') || '[]'));
     function renderTracker() {
